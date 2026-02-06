@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import GlobalNavigation from "./pages/components/GlobalNavigation.jsx";
+import GlobalNavigation from "../components/GlobalNavigation.jsx";
 describe("GlobalNavigation Komponenten Tests", () => {
     test("Sollte alle vier Navigations-Links enthalten (Aufgabe 5)", () => {
         render(
@@ -9,10 +9,10 @@ describe("GlobalNavigation Komponenten Tests", () => {
             </BrowserRouter>
         );
 
-        // Prüfen der geforderten Links wie 
+        // Prüfen der geforderten Links im Paths gegspeichert sind un dim Dokument enthalten sind
         expect(screen.getByRole('link', { name: /impressum/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /quiz/i })).toBeInTheDocument();
-        expect(screen.getByRole('link', { name: /regeln/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /spielregeln/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /kategorien/i })).toBeInTheDocument();
         expect(screen.getByRole('link',{name: /fragen/i})).toBeInTheDocument();

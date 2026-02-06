@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 
-//Root DOM mit Browser Router einmalig geladen
+//Dom wird im React DOM einmalig gerendert 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

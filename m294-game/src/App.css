@@ -68,19 +68,41 @@
 .kategorie-box{
   text-align: center;
   background-color:brown;
+  
 }
 
+
+.impressum{
+  
+background-color: #c4be0d;
+  /* Ein buntes Punkte-Muster, das an Konfetti erinnert */
+  background-image: radial-gradient(#ff00d0 10%, transparent 10%),
+                    radial-gradient(#00ffcc 10%, transparent 10%);
+  background-size: 50px 100px;
+  background-position: 0 0, 25px 25px;
+  animation: moveConfetti 20s linear infinite;
+}
+
+
+
+
+@keyframes moveConfetti {
+  from {background-position: 0 0, 25px;}
+  to {background-position:  0 50px, 25px 75px;}
+  
+}
 .start{
   border-color:black;
   border-radius: 30px;
   text-shadow: 2px 2px red;
   
 }
+
+
 .statusbild{
   width: 200px;
   height:200px;
 }
- Globale Navigationsleiste mit Hoover Effekt
 
 .global-nav a {
   color: #ecf0f1;
@@ -93,6 +115,20 @@
   transition: background-color 0.3s ease;
 }
 
+.spielregeln{
+  background-color:olive;
+}
+
+
+.ergebnis-screen{
+  background-color: cyan;
+}
+
+
+.kategorie{
+  color:green;
+}
+
 .global-nav a:hover {
   background-color: #3498db;
   color: white;
@@ -103,7 +139,10 @@
   background-color: #e74c3c;
 }
 
+.global-nav{
 
+  color:green;
+}
 
 .content {
   max-width: 800px;
@@ -116,14 +155,15 @@
 
 .willkommen{
   font-size: 30px;
-  color:blue;
+  color: cyan;
 
 }
 
 
 
+
 .spiel-ansicht {
-  background-color:red; /* Ein klassisches Dunkelblau (Navy) */
+  background-color:gold; /* Ein klassisches Dunkelblau (Navy) */
   min-height: 100vh;         /* Füllt die gesamte Bildschirmhöhe */
   color: white;              /* Macht den Text weiß, damit man ihn auf Blau lesen kann */
   width: 100%;
@@ -131,6 +171,8 @@
   padding: 20px;
   box-sizing: border-box;
 }
+
+
 
 .start-screen {
   display: flex;

@@ -10,6 +10,7 @@ import QuestionDisplay from './pages/components/QuestionDisplay';
 import Impressum from './pages/Impressum';
 import Kategorieauswahl from './pages/components/Kategorieauswahl';
 import Auswertung from './pages/components/Auswertung';
+import Fussball from '../assets/giphy.gif'
 
 // 1. Das Layout bestimmt, wo die Navigation und der Inhalt (Outlet) erscheint
 function Layout() {
@@ -21,42 +22,48 @@ function Layout() {
           {/* Hier gehört die Navigation hin */}
           <GlobalNavigation />
           <hr />
-          {/* Hier wird die jeweilige Seite (Spielansicht, etc.) reingeladen */}
+          {/* Hier wird die jeweilige Seite (Spielansicht, etc.) reingeladen also die Ansicht der Seit die wechselt  */}
           <Outlet /> 
           <hr />
         </header>
       </div>
-          <footer>© Ein React Projekt von Elias Kaiser</footer>
+
+          <footer><b>© Ein React Projekt von Elias Kaiser</b></footer>
 
     </div>
+
+    
   );
 }
 
 
 
-//Wenn Seite nicht gefunden ist Error Code anzeigt
+//Wenn Seite nicht gefunden wurde zeigt Error Code an  404
 function NotFound() {
   return <h2>404 - Seite nicht gefunden!</h2>;
 }
-//Main App mit Routing in einzelne Paths  
+//Main App mit Routing in einzelne Paths  der Spilkomponenten
 function App() {
 
 
   
   return (
 
+
+    //Der Browser Router ladet die Komponenten und Unterlinks wie quiz und /spielregen  hoch.
     
     <BrowserRouter>
       <Routes>
         {/* Alle Routen befinden sich  im Layout, welches ein Verbidnugn zum Outlet macht und er GlobalNavigation Komponente  */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<h2>Willkommen zum Quiz. Wähle oben ein Menü.</h2>} />
+          <Route index element={<h2>Willkommen zum Quiz. Wähle oben ein Menü.</h2> } />
+          
           <Route path="quiz" element={<Spielansicht />} />
-          <Route path="/spielregeln" element={<Spielregeln />} />
-          <Route path="/about" element={<Impressum />} />
-          <Route path="/auswertung" element={<Auswertung />} />
+          <Route path="spielregeln" element={<Spielregeln />} />
+          <Route path="about" element={<Impressum />} />
+          <Route path="auswertung" element={<Auswertung />} />
           <Route path="fragen" element = {<QuestionDisplay />} />
-          <Route path="/kategorien" element={<Kategorieauswahl />} />
+          <Route path="kategorien" element={<Kategorieauswahl />} />
           
           <Route path="*" element={<NotFound />} />
           
