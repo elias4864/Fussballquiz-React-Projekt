@@ -1,5 +1,6 @@
 import { QuizButton } from './Buttons.jsx';
 
+import React, { useState } from 'react';
 export const alleFragen = [
   {
     id: 1,
@@ -38,7 +39,7 @@ export const alleFragen = [
 
   },
 
-  { id: 6, catId: 50, question: "Wie viele Tore erzielte Kylian Mpappé im letzen Spiel?",
+  { id: 6, catId: 38, question: "Wie viele Tore erzielte Kylian Mpappé im letzen Spiel?",
     answers: ["4 Tore", "2 Tore", "3 Tore", "1 Tor"],
     correct_answer: "4 Tore"
 
@@ -46,47 +47,75 @@ export const alleFragen = [
   },
 
  
-  { id: 7, catId: 30, question : "Welche Position spielt Shaquiri?",
-    answers: ["Mittelfeld","Sturm","Verteidiger","Torwart"],
+  { id: 8, catId: 80, question : "Was ist der Vorname des Spielers mit der Id 80?",
+    answers: ["Oliver","Manuel","Kylian","Ricardo"],
     correct_answer:"Mittelfeld"
 
   },
 
+
+
+
 ];
-// ✅ korrekt
+
 
 
 const QuestionDisplay = ({
   frage,
+  alleFragenArray, // Das gesamte Array für den Join
   statusBild,
   frageNummer,
   gesamtFragen,
   onAntwort
 }) => {
-  // Sicherheits-Check: Falls 'frage' noch lädt oder undefined ist
+
+
+
+
   if (!frage) return <div>Lade Frage...</div>;
 
+  // --- JOIN LOGIK ---
+  // Hier werden alle Fragentexte aus dem Array mit einem Trenner verbunden
+  const alleFragenTexteGesejoined = alleFragenArray
+    ? alleFragenArray.map((f) => f.question).join(' +++ ')
+    : "Keine Liste verfügbar";
+
   return (
-    <div className="quiz-container">
-      <div className="session-header">
-        <span>Frage: {frageNummer} / {gesamtFragen}</span>
+    <div className="quiz-page-wrapper" style={{ fontFamily: 'sans-serif', padding: '20px' }}>
+      
+      {/* 1. DER QUIZ BEREICH (Einzelfrage) */}
+      <div className="quiz-container" style={{ border: '2px solid #333', padding: '20px', borderRadius: '10px' }}>
+        <div className="session-header">
+          <strong>Frage: {frageNummer} / {gesamtFragen}</strong>
+        </div>
+
+        {statusBild && <img src={statusBild} className="statusbild" alt="Status" style={{ width: '80px' }} />}
+
+        <p className="question-text" style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+          {frage.question}
+        </p>
+
+        <div className="buttons" style={{ display: 'grid', gap: '10px' }}>
+          {frage.answers.map((antwort, i) => (
+            <QuizButton
+              key={`${frage.id}-${i}`}
+              text={antwort}
+              onKlick={() => onAntwort(antwort)}
+            />
+          ))}
+        </div>
       </div>
 
-      <img src={statusBild} className="statusbild" alt="Status" />
+      <hr style={{ margin: '40px 0' }} />
 
-      <p className="question-text">{frage.question}</p>
-
-      <div className="buttons">
-        {/* Wir nutzen den Index 'i' zur Sicherheit beim Key */}
-        {frage.answers.map((antwort, i) => (
-          <QuizButton
-            key={`${frage.id}-${i}`} 
-            text={antwort}
-            // Achte darauf, ob dein QuizButton 'onKlick' oder 'onClick' erwartet!
-            onKlick={() => onAntwort(antwort)} 
-          />
-        ))}
+      {/* 2. DER JOIN BEREICH (Alle Fragen kombiniert) */}
+      <div className="joins-output" style={{ background: '#f0f0f0', padding: '15px', borderRadius: '5px' }}>
+        <h3>Alle Fragen im Überblick (Joined):</h3>
+        <p style={{ fontStyle: 'italic', color: '#555' }}>
+          {alleFragenTexteGesejoined}
+        </p>
       </div>
+
     </div>
   );
 };

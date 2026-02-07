@@ -38,7 +38,6 @@ describe('Kategorieauswahl Komponente', () => {
 
 
 
-    const spielerButton = =screen={.getByText("SP")}
 
     // Hier ebenfalls vi verwenden
     expect(mockedUsedNavigate).toHaveBeenCalledWith('/quiz?cat=20');

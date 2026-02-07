@@ -34,18 +34,32 @@ export default function Kategorieauswahl() {
             onClick={() => waehleKategorie(kat.id)}
             style={{ 
               cursor: 'pointer', 
-              border: '1px solid #b30cc6', 
+              border: '1px solid #09df30', 
+              
               padding: '10px', 
               margin: '5px',
               borderRadius: '8px',
               display: 'inline-block' 
+              
             }}
           >
             {kat.name}
           </div>
         ))}
       </div>
+
+    
+      <button className="newcategory"      
+          onClick={() => navigate('/new-category')}
+
+          style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: 'black', border: 'none', borderRadius: '10px', textShadow:' 5px 10px red', textAlign:' center' }}
+>Kategorie hinzufügen</button>
+
+
+
     </div>
+
+
   );
 }
 //

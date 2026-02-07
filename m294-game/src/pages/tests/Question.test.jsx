@@ -31,6 +31,7 @@ describe('Question Komponenten Tests', () => {
     
     expect(screen.findByRole('button', { name: /Sturm/i })).toBeInTheDocument();
      expect(screen.findByRole('button', { name: /Verteidiger/i })).toBeInTheDocument();
+     expect(screen.findByRole('button', {name:/Torwart/i})).toBeInTheDocument();
      
      
 

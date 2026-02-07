@@ -6,6 +6,8 @@ import Fussball from '../assets/Fussball.webp';
 import { QuizButton } from './components/Buttons.jsx';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { alleFragen } from './components/QuestionDisplay.jsx'; 
+// Das Bild für den Mouseover
+import Fussballbild from '../assets/Fussballbild.webp';
 
 function SpielAnsicht() {
   const [statusBild, setStatusBild] = useState(Frage);
@@ -14,6 +16,10 @@ function SpielAnsicht() {
   const [isBlue, setIsBlue] = useState(false);
   const [btnColor, setButtonColor] = useState('red');
   const [clickedButtonText, setClickedButtonText] = useState(null);
+
+  // --- NEU: State für das Hintergrundbild (Mouseover) ---
+  // Wir starten mit einem leeren String oder einer Standardfarbe
+  const [bgImage, setBgImage] = useState('');
 
   const [session, setSession] = useState({
     score: 0,
@@ -27,10 +33,18 @@ function SpielAnsicht() {
   const catId = searchParams.get('cat');
   const navigate = useNavigate();
 
-  // Filter-Logik: Vergleicht die ID aus der URL mit der ID in der Fragen-Liste
   const gefilterteFragen = (catId && !isNaN(catId))
     ? alleFragen.filter(f => Number(f.catId) === Number(catId))
     : alleFragen;
+
+  // --- NEU: Handler Funktionen für das Bild ---
+  const handleMouseEnter = () => {
+    setBgImage(Fussballbild); // Setzt das Fussballbild beim Betreten
+  };
+
+  const handleMouseLeave = () => {
+    setBgImage(''); // Entfernt das Bild beim Verlassen (Hintergrund wird wieder normal)
+  };
 
   const handleStartClick = () => {
     setIsBlue(true);
@@ -38,6 +52,7 @@ function SpielAnsicht() {
     setTimeout(() => {
       startQuiz();
       setIsBlue(false);
+      setButtonColor('red');
     }, 600);
   };
 
@@ -46,43 +61,26 @@ function SpielAnsicht() {
     setFrageIndex(0);
     setStatusBild(Frage);
     setSession({
-      score: 0,
-      richtig: 0,
-      falsch: 0,
-      startTime: new Date(),
-      endTime: null
+      score: 0, richtig: 0, falsch: 0,
+      startTime: new Date(), endTime: null
     });
   };
 
   const myHandler = (event) => {
     if (statusBild !== Frage) return;
-
     const gewaehlteAntwort = event.target.innerText.trim();
     const aktuelleFrage = gefilterteFragen[frageIndex];
-    
-    // Falls keine Fragen zur Kategorie gefunden wurden, abbrechen
     if (!aktuelleFrage) return;
 
-    //Konstant welche pro Frag edi eirchit antwoert ausliese
     const istRichtig = gewaehlteAntwort === aktuelleFrage.correct_answer;
     setClickedButtonText(gewaehlteAntwort);
 
     if (istRichtig) {
       setStatusBild(Congratulations);
-      alert("Diese gewählte Antwort ist richtig:"+aktuelleFrage.correct_answer);
-      setSession(prev => ({
-        ...prev,
-        score: prev.score + 1,
-        richtig: prev.richtig + 1
-      }));
+      setSession(prev => ({ ...prev, score: prev.score + 1, richtig: prev.richtig + 1 }));
     } else {
       setStatusBild(Falsch);
-      alert("Die gewählte Antwort ist falsch"+gewaehlteAntwort);
-      setSession(prev => ({
-        ...prev,
-        score: prev.score - 1,
-        falsch: prev.falsch - 1 // Hier stand vorher -1, korrigiert auf +1
-      }));
+      setSession(prev => ({ ...prev, falsch: prev.falsch + 1 }));
     }
 
     setTimeout(() => {
@@ -94,7 +92,7 @@ function SpielAnsicht() {
         setSession(prev => ({ ...prev, endTime: new Date() }));
         setFrageIndex(gefilterteFragen.length);
       }
-    }, 4000); // 2 Sekunden Pause ist angenehmer
+    }, 2000); 
   };
 
   const berechneDauer = () => {
@@ -103,27 +101,39 @@ function SpielAnsicht() {
   };
 
   return (
-    <div className={`spiel-ansicht ${isBlue ? 'session-start-active' : ''}`}>
+    <div 
+      // Verbindung der Events mit dem Haupt-Container
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`spiel-ansicht ${isBlue ? 'session-start-active' : ''}`}
+      style={{
+        // Dynamisches Hintergrundbild
+        backgroundImage: bgImage ? `url(${bgImage})` : 'none',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        transition: 'background-image 0.5s ease-in-out', // Sanfter Übergang
+        minHeight: '100vh'
+      }}
+    >
       {!quizGestartet ? (
-        /* STARTBILDSCHIRM */
         <div className="start-screen">
-          <img src={Fussball} alt="Fussball" className="start-logo" />
-          <h1 className="titel">Fussball-Quiz 2026</h1>
+          <h1 className="bounce-titel">Das Ultimative Fussball-Quiz 2026</h1>
           <button 
             className={`startbutton ${btnColor === 'green' ? 'active-green' : 'default-red'}`} 
             onClick={handleStartClick}
           >
-           ⇛ Start des Quiz ⇚
+            ⇛ Start des Quiz ⇚
           </button>
         </div>
       ) : frageIndex < gefilterteFragen.length ? (
-        /* QUIZ LÄUFT */
         <div className="quiz-container">
           <div className="session-header">
             <span>Frage: {frageIndex + 1} / {gefilterteFragen.length}</span>
             <span> Aktueller Score: {session.score}</span>
           </div>
-          <img src={statusBild} className="statusbild" alt="Status" />
+          <div className="image-container">
+            <img src={statusBild} className="statusbild" alt="Status" />
+          </div>
           <p className="question-text">{gefilterteFragen[frageIndex].question}</p>
           <div className="buttons">
             {gefilterteFragen[frageIndex].answers.map((antwort) => (
@@ -131,23 +141,35 @@ function SpielAnsicht() {
                 key={antwort} 
                 text={clickedButtonText === antwort ? "Ausgewählt!" : antwort} 
                 onKlick={myHandler} 
+                disabled={statusBild !== Frage}
               />
             ))}
           </div>
         </div>
       ) : (
-        /* ERGEBNISSE */
         <div className="ergebnis-screen">
           <h1><ins>Spielbericht</ins></h1>
-          <div className="stats">
-            <p>Punkte: <strong>{session.score}</strong></p>
-            <p>Richtige Antworten: {session.richtig} </p>
-            <p>Falsche Antworten: {session.falsch} </p>
-            <p>Beendet um: {session.endTime?.toLocaleTimeString()}</p>
-            <p>Dauer: {berechneDauer()} Sekunden </p>
+          <div className="stats-table-container">
+            <table className="ergebnis-tabelle">
+              <thead>
+                <tr>
+                  <th>Kategorie</th>
+                  <th>Ergebnis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Richtige Antworten</td><td>{session.richtig}</td></tr>
+                <tr><td>Falsche Antworten</td><td>{session.falsch}</td></tr>
+                <tr><td>Abschluss</td><td>{session.endTime?.toLocaleTimeString()} Uhr</td></tr>
+                <tr><td>Benötigte Zeit</td><td>{berechneDauer()} Sekunden</td></tr>
+                <tr><td><strong>Gesamtpunkte</strong></td><td><strong>{session.score}</strong></td></tr>
+              </tbody>
+            </table>
           </div>
-          <button onClick={() => navigate('/kategorien')}>Zurück zur Auswahl</button>
-          <button onClick={() => setQuizGestartet(false)}>Nochmal spielen</button>
+          <div className="result-actions">
+            <button className="nav-btn" onClick={() => navigate('/kategorien')}>Zurück</button>
+            <button className="retry-btn" onClick={() => setQuizGestartet(false)}>Nochmal</button>
+          </div>
         </div>
       )}
     </div>

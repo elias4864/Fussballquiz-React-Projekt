@@ -1,13 +1,20 @@
 
 import fifaLogo from '../assets/fifa-web3.webp';//Das Impressum wird in einer Funktion definiert
+import { useNavigate } from 'react-router-dom';
+
+
 export default function Impressum() {
 
   const datum = new Date().toLocaleDateString('de-DE');
    const now = new Date();
+     const navigate = useNavigate();
+
 
    const  name = "Elias Kaiser";
-   const email = "elias.kaiser@gmx.ch"
+   const email = "elias.kaiser@fussballag.ch"
    const adresse = "Oerlikon, Zürich"
+
+   const öffnungszeiten = "O"
   
 
 const eventhandler = () => {
@@ -20,11 +27,16 @@ const eventhandler = () => {
 
       
       <h1 className="impressum1">Impressum</h1>
-      <p>Creator des   Fussballgame {name}</p>
-      <b><p>Stand:{datum}</p></b>
-      <p>Kontakt: <a href={`mailto:${email}`}>{email}</a></p>
-      <b><p>Stand: {datum}</p></b>
-      <adress>{adresse}</adress>
+      <ol>Creator des   Fussballgame {name}</ol>
+      
+      <li><b><p>Stand:{datum}</p></b></li>
+      <li><p>Kontakt: <a href={`mailto:${email}`}>{email}</a></p></li>
+      <li><b><p>Stand: {datum}</p></b></li>
+      <li><adress>{adresse}</adress></li>
+      <a href="tel:+41 76 493 82 07">Bei Problemen bitte folgende Nummer anrufen: +41 76 493 82 07</a>
+
+
+      
 
 
 
@@ -54,14 +66,19 @@ const eventhandler = () => {
         
       </section>
 
+
+      <button className="home"      
+          onClick={() => navigate('/')}
+
+          style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: 'black',  color: 'white', border: 'none', borderRadius: '10px' }}
+>Zurück zur Startseite</button>
+
+
+
       
 
     
 
-    <footer>
-
-
-    </footer>
       
 
 
