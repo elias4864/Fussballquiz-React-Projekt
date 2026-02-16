@@ -20,7 +20,8 @@ function Layout() {
     <div className="App">
       <div className="content">
         <header className="App-header">
-          <marquee><h1 className="start">Willkommen zum Fussballquiz 2926</h1></marquee>
+          <marquee><h1 className="start">Willkommen zum Fussballquiz 2026</h1></marquee>
+          
           {/* Hier gehört die Navigation hin */}
           <GlobalNavigation />
           <hr />
@@ -67,6 +68,7 @@ function App() {
           <Route path="auswertung" element={<Auswertung />} />
           <Route path="fragen" element = {<QuestionDisplay />} />
           <Route path="kategorien" element={<Kategorieauswahl />} />
+          <Route path=""
           
           <Route path="*" element={<NotFound />} />
           

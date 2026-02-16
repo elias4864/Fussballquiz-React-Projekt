@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
-import Spielregeln from './Spielregeln';
+import Spielregeln from './pages/Spielregeln';
 
 // Da wir useNavigate testen wollen, mocken wir das Routing Modul
 const mockNavigate = vi.fn();
@@ -40,6 +40,9 @@ describe('Spielregeln Komponente', () => {
     expect(screen.getByText(/Wähle eine Kategorie aus/i)).toBeDefined();
     expect(screen.getByText(/Nur eine Antwort ist jeweils korrekt/i)).toBeDefined();
     expect(screen.getByText(/Beantworte die Frage durch  Klicken auf die Antwort Buttons/i)).toBeDefined();
+    expect(screen.getByRole(/Nur eine Antwort der 4 möglichen Antworten  ist jeweils korrekt/i)).toBeDefined();
+
+    expect(screen.get)
     
   });
 

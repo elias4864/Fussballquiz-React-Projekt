@@ -26,7 +26,11 @@ dist-ssr
 *.sw?
 *.package-lock.json
 *package.json
+*index.css
+*quizdata.js
 *setupTest.js
+
+
 *quizdata.js
 *eslint.config.js
 *README.md

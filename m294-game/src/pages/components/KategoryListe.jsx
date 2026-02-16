@@ -12,6 +12,22 @@ export default function KategoryListe(){
       .catch(error => console.error(error))
   }, [])
 
+
+
+
+
+  
+    
+
+  function addCategory(id){
+    fetch(`http://localhost:8081/categories/${id}`, {
+      method: "POST"
+    })
+    .then(response => response.ok && window.location.reload() || Promise.reject(response))
+    .catch(error => console.error(error))
+  }
+
+
   function deleteCategory(id){
     fetch(`http://localhost:8081/categories/${id}`, {
       method: "DELETE"
@@ -20,6 +36,8 @@ export default function KategoryListe(){
     .catch(error => console.error(error))
   }
 
+
+
   return (
     <div>
       <h1>CategoryList</h1>
@@ -27,7 +45,7 @@ export default function KategoryListe(){
       <table className="questionlist">
         <thead>
           <tr>
-            <th>Category</th>
+            <th>Kategorie</th>
             <th></th>
           </tr>
         </thead>
@@ -36,6 +54,7 @@ export default function KategoryListe(){
             categories.map(cat => <tr key={cat.id}>
               <td>{cat.name}</td>
               <td><a className="wastebasket" title="Loeschen" onClick={() => deleteCategory(cat.id)}>&#128465;</a></td>
+              <th><a className="addkategorie" title="hinzufügen" onClick={()=>addCategory(cat.id)}>&#128465;</a></th>
             </tr>)
           }
         </tbody>

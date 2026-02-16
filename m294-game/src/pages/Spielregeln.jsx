@@ -4,18 +4,24 @@ export default function Spielregeln() {
   const navigate = useNavigate();
 
   return (
-    <div className="spielregeln" style={{ padding: '20px', color: 'black' }}>
-      <h1><ins>Spielregeln Fussballquiz 2026</ins></h1>
+    <div className="spielregeln">
+      <h1 className='regeln'><ins>Spielregeln Fussballquiz 2026</ins></h1>
       
-      <section style={{ textAlign: 'left', marginBottom: '30px', fontSize: '30px' }}>
+      <section style={{ textAlign: 'left', marginBottom: '30px', fontSize: '30px',   }}>
+
         <ul>
           <li>Wähle  bitte eine Kategorie aus der Kategorieliste aus um das Thema der Frage zu bestimmen</li>
-          <li>Beantworte die Fragen durch Klicken auf die Antwort-Buttons.</li>
+          <li>Beantworte die Fragen durch <b>Anlicken</b> auf die Antwort-Buttons-</li>
           <li>Pro Frage hast du nur eine Chance  um die korrekte Antwort herauszufinden, danach erscheint die nächste Frage/Runde</li>
+          <li><b>Wichtig:</b>Die Frage wird erst  dann vom System validiert wenn der Button gedrückt wurde ein Darüberfahren ist ungültig und die gewählte Antwort wird nocht ausgewertet</li>
           <li>Nur eine Antwort der 4 möglichen Antworten  ist jeweils korrekt!</li>
+          <li>Für das Spiel darf die MySQL Datenbank nicht als Hilfe konsultiert werden,erlaubt ist nur ein Blatt Papier um die Antwort vor dem voreiligen Anklicken des Buttons gut zu überlegen </li> 
+          <li>Das Fussballquiz 2026  kann mehrmals gespielt werden</li>
+          <li>Der Spieler erhält am Ende des Spiels eine Darstellung seiner Spielleistung durch Anzahl Sterne- Die schlechteste Auswertung mit 1-nem Stern erhält ein Spieler mit 0 richtig beantworteten Fragen die Bestnote und so weite je höher di Leistung desto mehr Sterne.Die Bestnote wird mit 5 Sternen erteilt wenn alle Fragen korrekt beantwortet wurden!</li>
           <li>Bei einer falschen Antwort wird der Score um 1 kleiner, bei der Beantwortung der richtigen Frage gibt erhöht sich der Score um 1</li>
-          <h2><ins>Spielerweiterung:</ins></h2>Um das Spiel etwas spannender zu machen kann eine  zusätzliche Frage und dementsprechen eine Kateogrie hinzugefügt werden un das Schwierigkeitslevel der Fragen belibig erweitert werden vom User
-         <h2 className="spielregeln"><b>Ziel des Spiels: Du hast das Fussballspiel gewonnen falls du alle 8 Antworten korrekt beantwortet hast und verloren falls dein Socer negativ ist</b></h2>
+          <li>Der Spieler spielt das Spiel alleine es ist ein Single Player Game</li>
+          <h2><ins>Spielerweiterung:</ins></h2>Um das Spiel etwas spannender zu machen kann eine  zusätzliche Frage und dementsprechen eine Kateogrie  sowie eien Fragehinzugefügt werden oder gelöscht  werden um das Schwierigkeitslevel der Fragen belibig erweitert werden vom User
+         <h2 className="spielregeln"><b><ins>Ziel des Spiels:</ins> Du hast das Fussballspiel gewonnen falls du alle 8 Antworten korrekt beantwortet hast und verloren falls dein Score  negativ ist</b></h2>
          </ul>
      
       </section>
@@ -35,6 +41,10 @@ export default function Spielregeln() {
       >
         Eine neue Kategorie oder Frage wird hinzugefügt 
       </button>
+
+
+      
+      
       
     </div>
   );

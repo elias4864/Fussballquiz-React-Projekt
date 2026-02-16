@@ -5,12 +5,12 @@ import '@testing-library/jest-dom';
 import { expect } from 'vitest';
 
 
-//Arrange Mockup Test schreiben
+//Arrange Mockup Test schreiben un
 describe('Question Komponenten Tests', () => {
   test('sollte die erste Frage und alle Antwortmöglichkeiten korrekt rendern', ()  => {
-    // Wir rendern die Komponente der Spielansicht  innerhalb eines Routers
+    // Wir rendern die Komponente der Spielansicht  innerhalb eines Routers in den Specerreiut
     render(
-      <MemoryRouter initialEntries={['/quiz?cat=80']}>
+      <MemoryRouter initialEntries={['/quiz?cat=35']}>
         <Routes>
           <Route path="/quiz" element={<SpielAnsicht />} />
         </Routes>

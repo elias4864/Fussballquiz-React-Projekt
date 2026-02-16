@@ -1,6 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import GlobalNavigation from "../components/GlobalNavigation.jsx";
+import { expect } from 'vitest';
+
+//Testbeschreibung und GLobalNavigation Komponente  wird in BrwoserRouter  geladen dait im GUI angezeigt wird
 describe("GlobalNavigation Komponenten Tests", () => {
     test("Sollte alle vier Navigations-Links enthalten (Aufgabe 5)", () => {
         render(
@@ -9,7 +12,7 @@ describe("GlobalNavigation Komponenten Tests", () => {
             </BrowserRouter>
         );
 
-        // Prüfen der geforderten Links im odkument tatsähclich vorhanden sind oder nicht
+        // Prüfen der geforderten Links also Entryoints tatsähclihc korrekt von der GLoabLnaviagiotsnleiste gerendert werden von der entsprehcenden komponente zugehörog
         expect(screen.getByRole('link', { name: /impressum/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /quiz/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /spielregeln/i })).toBeInTheDocument();

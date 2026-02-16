@@ -28,6 +28,19 @@
 
 
 
+
+@keyframes moveConfetti {
+  from {background-position: 0 0, 25px;}
+  to {background-position:  0 50px, 25px 75px;}
+  
+}
+
+.regeln{
+      text-shadow: 4px 2px red;
+
+}
+
+
 .highlight-blue {
   background-color: #007bff !important; /* Ein kräftiges Fussball-Blau */
   box-shadow: 0 0 30px rgba(0, 123, 255, 0.8);
@@ -37,13 +50,16 @@
 .bounce-titel{
   
   color: yellow;
-    font-family: "Lucida Console", "Courier New", monospace;
+    text-shadow: 4px 2px red;
+
+    font-family:'Courier New', 'Courier', 'monospace';
 
   font-size: 70px;
-  text-shadow:black;
+      transform: rotate(0deg);
 
 
-  animation: bounce-titel 3s infinite; /* Der Name muss mit @keyframes übereinstimmen */
+
+  animation: bounce-titel 5s infinite; /* Der Name muss mit @keyframes übereinstimmen */
 
 
 }
@@ -79,11 +95,56 @@ border-radius: 100px;
 .kategorie-box{
   text-align: center;
   background-color:brown;
+   background-image: radial-gradient(orange 10%, transparent 10%),
+                    radial-gradient(#00ffcc 10%, transparent 10%);
+  background-size: 50px 100px;
+  background-position: 0 0, 25px 25px;
+  animation: moveConfetti 3s linear infinite;
   
 }
 
 .home{
-  background-color:#e74c3c;
+background-color: rgb(23, 215, 77);
+   
+ 
+
+}
+
+.stats-summary{
+  color:red;
+  box-sizing: 100px;
+}
+
+
+
+
+
+
+.bounce2{
+    animation: bounce-titel 3s infinite; /* Der Name muss mit @keyframes übereinstimmen */
+
+
+}
+ @keyframes bounce2 {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-50px);
+    }
+    60% {
+      transform: translateY(-25px);
+    }
+    80%{
+      transform: translateY(-360);
+    }
+  }
+
+
+@keyframes moveConfetti {
+  from {background-position: 0 0, 25px;}
+  to {background-position:  0 50px, 25px 75px;}
+  
 }
 
 
@@ -98,6 +159,11 @@ border-radius: 100px;
   border: 1px solid #ddd;
   padding: 12px;
   text-align: left;
+  background-color:brown;
+}
+
+.endergebnis{
+  background-color: orangered;
 }
 
 .ergebnis-tabelle th {
@@ -105,6 +171,16 @@ border-radius: 100px;
   color: white;
 }
 
+.impressum1{
+  font-family: monospace  ;
+  text-shadow: 2px 2px rgb(148, 13, 179);
+}
+
+
+.retry-btn{
+  border-radius: 20%;
+  background-color: brown;
+}
 .impressum{
   
 background-color: #c4be0d;
@@ -123,10 +199,22 @@ background-color: #c4be0d;
   to {background-position:  0 50px, 25px 75px;}
   
 }
+
+
+
+
+
+
+.score{
+  border-radius: 20%;
+  color:gold;
+  background-color: #00ffcc;
+}
+
 .start{
   border-color:black;
   border-radius: 30px;
-  text-shadow: 4px 2px red;
+  text-shadow: 2px 2px red;
   
 }
 
@@ -143,18 +231,33 @@ background-color: #c4be0d;
 }
 
 
+.question-text{
+  font-size: 80px;
+  color:brown;
+}
+
+.score{
+  font-style: italic;
+  color: brown;
+}
 
 .auswertung-container{
   background-image: url('C:\Users\elias\OneDrive - Kalaidos Bildungsgruppe AG\Documents\WISS\WISS-Module\Semester 3\294-Frontend einer interaktiven Webapplikation realisieren\NodejsServer\Fussballquiz React Projekt\m294-game\src\assets\Fussballfeld.webp');
   background-size: cover;
-  color:brown;
+  color:#ff6b6b;
+
+ 
 }
+
+
 
 .statusbild{
   width: 200px;
   height:200px;
 }
-
+.time{
+  text-align: center;
+}
 
 .global-nav a {
   color: #ecf0f1;
@@ -169,11 +272,17 @@ background-color: #c4be0d;
 
 .spielregeln{
   background-color: brown;
-}
+  
+  font-family: 'Courier New', Courier, monospace;
 
-
-.ergebnis-screen{
-  background-color: brown;
+    
+background-color: #c4be0d;
+  /* Ein buntes Punkte-Muster, das an Konfetti erinnert */
+  background-image: radial-gradient(#ff00d0 10%, transparent 10%),
+                    radial-gradient(#00ffcc 10%, transparent 10%);
+  background-size: 50px 100px;
+  background-position: 0 0, 25px 25px;
+  animation: moveConfetti 20s linear infinite;
 }
 
 
@@ -196,11 +305,16 @@ background-color: #c4be0d;
   color:green;
 }
 
+.kategory-container{
+  background-color:#0ac423;
+}
+
 .content {
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-    box-shadow: 10px 10px 5px 12px lightblue;
+    box-shadow: 10px 10px 5px 40px lightblue;
+    border-radius: 40px;
 
   
 }
@@ -211,6 +325,10 @@ background-color: #c4be0d;
 
 }
 
+.nav-btn{
+  background-color: olive;
+  border-radius: 40%;
+}
 
 
 .start{
@@ -263,18 +381,23 @@ background-color: #c4be0d;
 
 
 
+.gameover{
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-shadow: blue;
+}
+
 
 /* Der Start-Button */
 .startbutton {
   background-color: #2ecc71; /* Sattes Fussball-Grün */
   border-color:black;
-  padding: 15px 32px;
-
-  border: none;
   padding: 15px 40px;
+  font-size: 100px;
+
+  border: 20px;
   font-size: 1.5rem;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 200px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
@@ -330,6 +453,7 @@ background-color: #c4be0d;
 .spielregeln{
 
   font-size: 40px;
+  background-color: #00ffcc;
 
 
 }
@@ -410,6 +534,11 @@ background-color: #c4be0d;
 }
 
 
+
+.game-over-container{
+
+text-shadow: red;
+}
 
 .smiley{
 

@@ -14,7 +14,7 @@ export default function Kategorieauswahl() {
     { id: 21, name: "Aktive Spieler" },
     { id: 35, name: "Spieler" },
     {id: 45, name:"Team"},
-    
+    {id:55, name:""}
   
   ];
 
@@ -34,11 +34,10 @@ export default function Kategorieauswahl() {
             onClick={() => waehleKategorie(kat.id)}
             style={{ 
               cursor: 'pointer', 
-              border: '1px solid #09df30', 
-              
+              border: '1px solid #0923ba', 
               padding: '10px', 
-              margin: '5px',
-              borderRadius: '8px',
+              margin: '5px', 
+              borderRadius: '25px',
               display: 'inline-block' 
               
             }}
@@ -56,6 +55,16 @@ export default function Kategorieauswahl() {
 >Zum Kategorieformular</button>
 
 
+
+
+
+
+       <button className="newcategory"      
+          onClick={() => navigate('/quiz')}
+          
+
+          style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: 'violet', border: 'none', borderRadius: '10px', textShadow:' 5px 10px red', textAlign:' center' }}
+>Zum Fussballquiz</button>
 
     </div>
 

@@ -26,6 +26,7 @@ describe('Kategorieauswahl Komponente', () => {
     mockedUsedNavigate.mockClear();
   });
 
+  //Browser rendert zur Komponente Kategorieauswahl mit der Kategorieliste
   test('navigiert zur richtigen URL, wenn eine Kategorie geklickt wird', () => {
     render(
       <BrowserRouter>
