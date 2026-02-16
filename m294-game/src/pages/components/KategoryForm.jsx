@@ -24,7 +24,7 @@ export default function KategoryForm() {
 
       if (response.ok) {
         // Nach Erfolg zur Liste zurückkehren
-        navigate("/categories");
+        navigate("/kategorien");
       } else {
         console.error("Server antwortete mit Fehler:", response.statusText);
       }

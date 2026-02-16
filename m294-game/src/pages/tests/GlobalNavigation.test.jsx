@@ -9,14 +9,14 @@ describe("GlobalNavigation Komponenten Tests", () => {
             </BrowserRouter>
         );
 
-        // Prüfen der geforderten Links im Paths gegspeichert sind un dim Dokument enthalten sind
+        // Prüfen der geforderten Links im odkument tatsähclich vorhanden sind oder nicht
         expect(screen.getByRole('link', { name: /impressum/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /quiz/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /spielregeln/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /kategorien/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /kategorie hinzufügen/i })).toBeInTheDocument();
         expect(screen.getByRole('link',{name: /fragen/i})).toBeInTheDocument();
-        expect(screen.getByRole('link',{name:/new-kategory/i})).toBeInTheDocument();
 
         
         expect(screen.getByRole('link', { name: /auswertung/i })).toBeInTheDocument();

@@ -1,145 +1,93 @@
-
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Auswertung() {
   const location = useLocation();
   const navigate = useNavigate();
+  const name = "Elias";
   
-  // Daten aus dem State holen (mit Fallback, falls jemand die Seite direkt aufruft)
-  const { ergebnisse, score } = location.state || { ergebnisse: [], score: 0 };
+  // Daten aus dem State holen
+  const { ergebnisse, score, richtig, falsch } = location.state || { 
+    ergebnisse: [], 
+    score: 0, 
+    richtig: 0, 
+    falsch: 0 
+  };
 
+  return (
 
-  
-
-  
-  const alleFragen = [
-    {
-      id: 1,
-      catId: 1, // Beispiel: Kategorie 'Schweizer Nationalspieler'
-      question: "Welche Position spielt Yann Sommer?",
-      answers: ["Verteidiger", "Mittelfeld", "Torwart", "Sturm"],
-      correct_answer: "Torwart"
-    },
-    {
-      id: 2,
-      catId: 2, // Beispiel: Kategorie 'Legenden'
-      question: "In welchem Jahr wurde Diego Maradona geboren?",
-      answers: ["1955", "1960", "1965", "1970"],
-      correct_answer: "1960"
-    },
-    {
-      id: 3,
-      catId: 1,
-      question: "Für welche Nationalität spielt Kylian Mbappé?",
-      answers: ["Portugal", "Spanien", "Frankreich", "Schweiz"],
-      correct_answer: "Frankreich"
-    },
-    {
-      id: 4,
-      catId: 1,
-      question: "Welcher dieser Spieler ist ein Verteidiger?",
-      answers: ["Xherdan Shaqiri", "Manuel Akanji", "Breel Embolo", "Cristiano Ronaldo"],
-      correct_answer: "Manuel Akanji"
-    },
-  
-    { id:5, 
-      catId: 1,
-      question : "Welcher Spieler hat die EM 2008 und EM 2012 gewonnen?",
-      answers: ["Iker Casillas", "Oliver Kahn","Christiano Ronaldo","Pelé"],
-      correct_answer: "Iker Casillas"
-  
-    },
-  
-    { id: 6, catId: 1, question: "Wie viele Tore erzielte Kylian Mpappé im letzen Spiel?",
-      answers: ["4 Tore", "2 Tore", "3 Tore", "1 Tor"],
-      correct_answer: "4 Tore"
-  
-  
-    },
-  
-   
-    { id: 7, catId: 30, question : "Welche Position spielt Shaquiri?",
-      answers: ["Mittelfeld","Sturm","Verteidiger","Torwart"],
-      correct_answer:"Mittelfeld"
-  
-    },
-  
-  ];
-
-
-
-
-  const QuestionDisplay = ({
-    frage,
-    statusBild,
-    frageNummer,
-    gesamtFragen,
-    onAntwort
-  }) => {
-    // Sicherheits-Check: Falls 'frage' noch lädt oder undefined ist
-    if (!frage) return <div>Lade Frage...</div>;
-  
-    return (
-      <div className="quiz-container">
-        <div className="session-header">
-          <span>Frage: {frageNummer} / {gesamtFragen}</span>
-        </div>
-  
-        <img src={statusBild} className="statusbild" alt="Status" />
-  
-        <p className="question-text">{frage.question}</p>
-  
-        <div className="buttons">
-          {/* Wir nutzen den Index 'i' zur Sicherheit beim Key */}
-          {frage.answers.map((antwort, i) => (
-            <QuizButton
-              key={`${frage.id}-${i}`} 
-              text={antwort}
-              // Achte darauf, ob dein QuizButton 'onKlick' oder 'onClick' erwartet!
-              onKlick={() => onAntwort(antwort)} 
-            />
-          ))}
-        </div>
+    //Name ersetzen 
+    <div className="auswertung-container" style={{ textAlign: 'center', padding: '20px' }}>
+      <h1>Spielerdashboard von:{name}</h1>
+      
+      {/* Das Bild wird über den Import angezeigt, nicht über den C-Pfad */}
+      <div style={{ marginBottom: '20px' }}>
       </div>
 
-      
+      <div className="stats-summary" style={{ marginBottom: '30px', fontSize: '1.2rem' }}>
+        <p>Gesamtpunkte: <strong>{score}</strong></p>
+        <p>✅ Richtig: {richtig} | ❌ Falsch: {falsch}</p>
+      </div>
 
+      <div className="fragen-liste">
+        <h3>Auswertung der Ergebnisse der Fragen</h3>
+        <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '20px' }}>
+          <thead>
+            <tr style={{ backgroundColor: '#333', color: 'white' }}>
+              <th style={{ padding: '10px' }}>Frage</th>
+              <th style={{ padding: '10px' }}>Ergebnis</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* Hier mappen wir durch die Fragen, damit sie angezeigt werden */}
+            {ergebnisse.length > 0 ? (
+              ergebnisse.map((f, index) => (
+                <tr key={index} style={{ borderBottom: '1px solid #ccc' }}>
+                  <td style={{ padding: '10px' }}>{f.question}</td>
+                  <td style={{ padding: '10px' }}>
+                    {f.userAnswer === f.correct_answer ? '✅ Korrekt' : `❌ Falsch (Richtig: ${f.correct_answer})`}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="2" style={{ padding: '20px' }}>Keine Daten vorhanden. Starte ein neues Quiz!</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
-
-
-
-
-
-  
-    );
-  };
-  
-  
-  
-
-
-
-
-
-
-
-<button 
+      <button 
         className="kategorie" 
-        style={{ marginTop: '20px', padding: '10px 20px', cursor: 'pointer' }}
+        style={{ 
+          marginTop: '30px', 
+          padding: '15px 30px', 
+          backgroundColor: '#27ae60', 
+          color: 'white', 
+          border: 'none', 
+          borderRadius: '5px',
+          cursor: 'pointer' 
+        }}
         onClick={() => navigate('/kategorien')}
       >
-        Zurück zur Auswahl
+        ⇚ Zurück zur Auswahl
       </button>
-  
+             <button 
+        className="kategorie" 
+        style={{ 
+          marginTop: '30px', 
+          padding: '15px 30px', 
+          backgroundColor: '#27ae60', 
+          color: 'white', 
+          border: 'none', 
+          borderRadius: '5px',
+          cursor: 'pointer' 
+        }}
+        onClick={() => navigate('/quiz')}
+      >
+          Erneut Quiz beginnen
+      </button>
 
+    </div>
+  );
 }
-
-
-
-  
-
-
-
-
-  // ✅ korrekt
-  

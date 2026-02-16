@@ -52,7 +52,7 @@ function SpielAnsicht() {
     setTimeout(() => {
       startQuiz();
       setIsBlue(false);
-      setButtonColor('red');
+      setButtonColor('orange');
     }, 600);
   };
 
@@ -77,10 +77,12 @@ function SpielAnsicht() {
 
     if (istRichtig) {
       setStatusBild(Congratulations);
+      alert("Die Frage wurde korrekt beantwortet"+"Richtige Antwort ist:"+aktuelleFrage.correct_answer);
       setSession(prev => ({ ...prev, score: prev.score + 1, richtig: prev.richtig + 1 }));
     } else {
       setStatusBild(Falsch);
-      setSession(prev => ({ ...prev, falsch: prev.falsch + 1 }));
+      alert("Deine Antwort"+gewaehlteAntwort+"ist leider falsch");
+      setSession(prev => ({ ...prev,  score: prev.score-1, falsch: prev.falsch +1 }));
     }
 
     setTimeout(() => {
@@ -111,7 +113,7 @@ function SpielAnsicht() {
         backgroundImage: bgImage ? `url(${bgImage})` : 'none',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        transition: 'background-image 0.5s ease-in-out', // Sanfter Übergang
+        transition: 'background-image 1s ease-in-out', // Sanfter Übergang
         minHeight: '100vh'
       }}
     >
@@ -122,30 +124,39 @@ function SpielAnsicht() {
             className={`startbutton ${btnColor === 'green' ? 'active-green' : 'default-red'}`} 
             onClick={handleStartClick}
           >
-            ⇛ Start des Quiz ⇚
+            ⇛ Fussballgame starten ⇚
           </button>
         </div>
       ) : frageIndex < gefilterteFragen.length ? (
         <div className="quiz-container">
           <div className="session-header">
-            <span>Frage: {frageIndex + 1} / {gefilterteFragen.length}</span>
-            <span> Aktueller Score: {session.score}</span>
+            <h1><span>Frage: {frageIndex + 1} / {gefilterteFragen.length}</span></h1>
           </div>
           <div className="image-container">
             <img src={statusBild} className="statusbild" alt="Status" />
           </div>
-          <p className="question-text">{gefilterteFragen[frageIndex].question}</p>
-          <div className="buttons">
+          <br></br>
+        <p className="question-text">{gefilterteFragen[frageIndex].question}</p>
+        
+          <div className="buttons"><b>
+              <h1>
             {gefilterteFragen[frageIndex].answers.map((antwort) => (
               <QuizButton 
                 key={antwort} 
                 text={clickedButtonText === antwort ? "Ausgewählt!" : antwort} 
                 onKlick={myHandler} 
                 disabled={statusBild !== Frage}
+                
               />
+            
+          
             ))}
+            </h1></b>
           </div>
+          <h1><span>Aktueller Score:{session.score}</span></h1>
+
         </div>
+        
       ) : (
         <div className="ergebnis-screen">
           <h1><ins>Spielbericht</ins></h1>
@@ -155,20 +166,22 @@ function SpielAnsicht() {
                 <tr>
                   <th>Kategorie</th>
                   <th>Ergebnis</th>
+                  <th>Spiel gewonnen?</th>
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Richtige Antworten</td><td>{session.richtig}</td></tr>
-                <tr><td>Falsche Antworten</td><td>{session.falsch}</td></tr>
-                <tr><td>Abschluss</td><td>{session.endTime?.toLocaleTimeString()} Uhr</td></tr>
+                <tr className='richtig'><td>Richtige Antworten</td><td>{session.richtig}</td></tr>
+                <tr className='falsch'><td>Falsche Antworten</td><td>{session.falsch}</td></tr>
+                <tr><td>Differenz zwischen falschen und richtigen Antworten:</td><td>{session.richtig-session.falsch}</td></tr>
+                <tr><td>Abschluss des Quiz um:</td><td>{session.endTime?.toLocaleTimeString()} Uhr</td></tr>
                 <tr><td>Benötigte Zeit</td><td>{berechneDauer()} Sekunden</td></tr>
-                <tr><td><strong>Gesamtpunkte</strong></td><td><strong>{session.score}</strong></td></tr>
+                <tr className='gesamtpunkte'><td><strong>Gesamtpunkte</strong></td><td><strong>{session.score}</strong></td></tr>
               </tbody>
             </table>
           </div>
           <div className="result-actions">
-            <button className="nav-btn" onClick={() => navigate('/kategorien')}>Zurück</button>
-            <button className="retry-btn" onClick={() => setQuizGestartet(false)}>Nochmal</button>
+            <button className="nav-btn" onClick={() => navigate('/kategorien')}>Zu den Kategorien</button>
+            <button className="retry-btn" onClick={() => setQuizGestartet(false)}>Quiz erneut starten</button>
           </div>
         </div>
       )}

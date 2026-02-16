@@ -37,7 +37,8 @@
 .bounce-titel{
   
   color: yellow;
-  font-family: Verdana, Arial, Tahoma, Serif;
+    font-family: "Lucida Console", "Courier New", monospace;
+
   font-size: 70px;
   text-shadow:black;
 
@@ -54,7 +55,7 @@
 
 .global-nav {
   background-color:blue;
-  border-radius:50px;
+border-radius: 100px;
   
   
 
@@ -71,8 +72,8 @@
 
 .global-nav:hover {
   transform: translateY(-2px);
-  background: rgba(0, 80, 255, 1);
-  border-bottom: 2px solid black; /* Erzeugt eine farbige Linie unter dem Text */
+  background:red;
+  border-bottom: 2px solid grey; /* Erzeugt eine farbige Linie unter dem Text */
 }
 
 .kategorie-box{
@@ -129,11 +130,31 @@ background-color: #c4be0d;
   
 }
 
+.richtig{
+  background-color: green;
+}
+
+.falsch{
+  background-color: red;
+}
+
+.gesamtpunkte{
+  background-color: orange;;
+}
+
+
+
+.auswertung-container{
+  background-image: url('C:\Users\elias\OneDrive - Kalaidos Bildungsgruppe AG\Documents\WISS\WISS-Module\Semester 3\294-Frontend einer interaktiven Webapplikation realisieren\NodejsServer\Fussballquiz React Projekt\m294-game\src\assets\Fussballfeld.webp');
+  background-size: cover;
+  color:brown;
+}
 
 .statusbild{
   width: 200px;
   height:200px;
 }
+
 
 .global-nav a {
   color: #ecf0f1;
@@ -147,12 +168,12 @@ background-color: #c4be0d;
 }
 
 .spielregeln{
-  background-color:olive;
+  background-color: brown;
 }
 
 
 .ergebnis-screen{
-  background-color: cyan;
+  background-color: brown;
 }
 
 
@@ -176,7 +197,7 @@ background-color: #c4be0d;
 }
 
 .content {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   text-align: center;
     box-shadow: 10px 10px 5px 12px lightblue;
@@ -306,6 +327,12 @@ background-color: #c4be0d;
 }
 
 
+.spielregeln{
+
+  font-size: 40px;
+
+
+}
 
 .kategorie{
   background-color:grey;
@@ -317,12 +344,14 @@ background-color: #c4be0d;
   text-align:center;
   padding: 15px 32px;
   background-color:blue;
+  font-family:fantasy;
 
 
 }
 
 .sesssion-header{
-          font-family: "Source Sans Pro", "Arial", sans-serif;
+    font-family: "Lucida Console", "Courier New", monospace;
+
 
 }
 
@@ -375,7 +404,8 @@ background-color: #c4be0d;
   margin: 5px;
   border-radius: 50%;
   color: violet;
-  font-family:'Times New Roman', Times, serif;
+  font-family: "Lucida Console", "Courier New", monospace;
+
   
 }
 

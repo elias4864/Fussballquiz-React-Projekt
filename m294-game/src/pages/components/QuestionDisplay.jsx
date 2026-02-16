@@ -26,7 +26,7 @@ export const alleFragen = [
   {
     id: 4,
     catId: 35,
-    question: "Welcher dieser Spieler ist ein Verteidiger?",
+    question: "Welcher dieser  vorgegebenen Spieler ist ein Verteidiger?",
     answers: ["Xherdan Shaqiri", "Manuel Akanji", "Breel Embolo", "Cristiano Ronaldo"],
     correct_answer: "Manuel Akanji"
   },
@@ -34,8 +34,8 @@ export const alleFragen = [
   { id:5, 
     catId: 35,
     question : "Welcher Spieler hat die EM 2008 und EM 2012 gewonnen?",
-    answers: ["Iker Casillas", "Oliver Kahn","Christiano Ronaldo","Pelé"],
-    correct_answer: "Iker Casillas"
+    answers: ["Manuel  Akanji", "Iker Casillas","Christiano Ronaldo","Pelé"],
+    correct_answer: "Iker Casillas",
 
   },
 
@@ -46,17 +46,31 @@ export const alleFragen = [
 
   },
 
+
+  { id: 7, catId: 38, question: "Wie viele Tore erzielte Kylian Mpappé im letzen Spiel?",
+    answers: ["4 Tore", "2 Tore", "3 Tore", "1 Tor"],
+    correct_answer: "4 Tore"
+
+
+  },
+
  
+
   { id: 8, catId: 80, question : "Was ist der Vorname des Spielers mit der Id 80?",
     answers: ["Oliver","Manuel","Kylian","Ricardo"],
-    correct_answer:"Mittelfeld"
+    correct_answer:"Oliver"
 
   },
 
 
-
-
+  { id:9,  catId: 10, question: "Von welchem Land kommt Diego Maradona?", 
+  answers: ['Argentinien', 'Brasilien', 'Kolumbien', 'Honduras'],
+  correct_answer: "Argentinien"
+  },
 ];
+ 
+
+
 
 
 

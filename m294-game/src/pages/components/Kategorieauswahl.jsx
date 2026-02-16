@@ -53,7 +53,7 @@ export default function Kategorieauswahl() {
           onClick={() => navigate('/new-category')}
 
           style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: 'black', border: 'none', borderRadius: '10px', textShadow:' 5px 10px red', textAlign:' center' }}
->Kategorie hinzufügen</button>
+>Zum Kategorieformular</button>
 
 
 
