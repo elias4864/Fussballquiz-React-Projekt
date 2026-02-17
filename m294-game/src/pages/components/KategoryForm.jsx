@@ -1,98 +1,83 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function KategoryForm() { 
-  const [entries, setEntries] = useState({ 
-    name: "", 
-    id: "", 
-    question_id: "" 
-  });
-  const [error, setError] = useState(null); // Für Fehlermeldungen im UI
+export default function CategoryForm() {
+  // State für den Kategorienamen
+  const [categoryName, setCategoryName] = useState("");
   const navigate = useNavigate();
 
-  const store = (e) => {
-    const { name, value } = e.target;
-    setEntries((prev) => ({ ...prev, [name]: value }));
+  // Handler für die Eingabeänderung von Backend
+  const handleChange = (e) => {
+    setCategoryName(e.target.value);
   };
 
-
-
-
-
-
-  const submit = async (e) => {
+  // Absenden der Daten an das Backend  asynchron zuerst daten schicekn dann fethcne also und dann zurückschcen udn con JSON in Plain Stext ugweandelt
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null); // Reset Fehlerzustand
+
+    // Validierung: Name muss mindestens 3 Zeichen haben (optional laut Bildbeispiel)
+    if (categoryName.trim().length < 3) {
+      alert("Bitte einen sinnvollen Kategorienamen eingeben.");
+      return;
+    }
+
+    // 1. Ziel-URL mit URL-Parametern zusammenbauen (laut Aufgabe Punkt 5)
+    // Beispiel: http://localhost:8080/category?name=Datenbanken
+    const url = `http://localhost:8080/category?name=${encodeURIComponent(categoryName)}`;
 
     try {
-      const response = await fetch("http://localhost:8081/categories", {
+      const response = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(entries),
+        headers: {
+          // 2. Geforderter Content-Type laut Aufgabenstellung
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        // Da die Daten bereits in der URL stehen, bleibt der Body leer oder 
+        // enthält die passenden encodeten Daten. Hier laut URL-Beispiel:
+        body: "" 
       });
 
       if (response.ok) {
+        alert("Kategorie wurde angelegt!");
+        // Zurück zur Liste navigieren
         navigate("/kategorien");
       } else {
-        setError("Fehler beim Speichern der Kategorie.");
+        alert(`Fehler: ${response.status}`);
       }
-    } catch (err) {
-      setError("Server nicht erreichbar. Bitte später versuchen.");
-      console.error("Fetch-Fehler:", err);
+    } catch (error) {
+      console.error("Netzwerkfehler beim Speichern:", error);
     }
   };
 
-
-
-
- 
- 
-
   return (
-    <div className="kategory-container">
-      <h2>Neue Kategorie erstellen</h2>
-      
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      <form onSubmit={submit}>
-        <div className="form-group">
-          <label htmlFor="name">Kategoriename:</label>
-          <input 
-            id="name"
-            type="text" 
-            name="name" 
-            value={entries.name} 
-            onChange={store} 
-            required 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="id">Kategorie ID:</label>
-          <input 
-            id="id"
-            type="number" // Besser als text für IDs
-            name="id" 
-            value={entries.id} 
-            onChange={store} 
-            required 
+    <div className="category-form-container">
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="category">Kategoriename:</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            value={categoryName}
+            onChange={handleChange}
+            required
           />
         </div>
         
-        <div className="form-group">
-          <label htmlFor="question_id">Frage ID:</label>
-          <input 
-            id="question_id"
-            type="number" 
-            name="question_id" 
-            value={entries.question_id} 
-            onChange={store} 
-            required 
-          />
+        <div style={{ marginTop: "10px" }}>
+          <button type="submit">Kategorie hinzufügen</button>
+          <ul>
+        {categories.map(cat => (
+          <li key={cat.id}>
+            {cat.name} 
+            <button onClick={() => deleteCategory(cat.id)}>Löschen</button>
+          </li>
+        ))}
+      </ul>
+          <button type="button" onClick={() => navigate("/kategorien")}>
+            Abbrechen
+          </button>
         </div>
-
-        <button type="submit" className="submit-btn">Hinzufügen</button>
       </form>
     </div>
   );

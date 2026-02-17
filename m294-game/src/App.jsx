@@ -14,6 +14,9 @@ import KategoryListe from "./pages/components/KategoryListe.jsx";
 import KategoryForm from "./pages/components/KategoryForm.jsx";
 
 import Home from './pages/Home';
+import Fragenliste from './pages/components/Frageliste.jsx';
+import Frageliste from './pages/components/Frageliste.jsx';
+import Frageform from './pages/components/QuestionForm.jsx';
 // 1. Das Layout bestimmt, wo die Navigation und der Inhalt (Outlet) erscheint
 function Layout() {
   return (
@@ -63,12 +66,14 @@ function App() {
           <Route path="quiz" element={<Spielansicht />} />
           <Route path="spielregeln" element={<Spielregeln />} />
           <Route path="about" element={<Impressum />} />
-          <Route path="/new-category" element={<KategoryForm />} />
+          <Route path="new-category" element={<KategoryForm />} />
          <Route path="*" element={<KategoryListe />} />
           <Route path="auswertung" element={<Auswertung />} />
           <Route path="fragen" element = {<QuestionDisplay />} />
           <Route path="kategorien" element={<Kategorieauswahl />} />
-          <Route path=""
+          <Route path="kategorieliste" element={<KategoryListe />} />
+          <Route path="frageliste" element={<Frageliste />}  />
+          <Route path="new-question" element={<Frageform />} />
           
           <Route path="*" element={<NotFound />} />
           

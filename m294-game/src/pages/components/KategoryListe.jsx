@@ -1,69 +1,70 @@
+import { useState, useEffect } from "react";
 
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom";
-export default function KategoryListe(){
-
+export default function KategoryListe() {
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
 
+  // 1. Laden der Daten (GET)
   useEffect(() => {
-    fetch("http://localhost:8081/categories")
-      .then(response => response.ok && response.json() || Promise.reject(response))
-      .then(data => setCategories(data))
-      .catch(error => console.error(error))
-  }, [])
+    fetch("http://localhost:8081/categories/all") // Endpunkt aus deinem Controller
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Fehler beim Laden:", error);
+        setLoading(false);
+      });
+  }, []);
 
-
-
-
-
-  
-    
-
-  function addCategory(id){
-    fetch(`http://localhost:8081/categories/${id}`, {
-      method: "POST"
+  // 2. Lösch-Funktion (DELETE)
+  const deleteCategory = (id) => {
+    // Pfad: /categories/delete/{id} laut Controller
+    fetch(`http://localhost:8081/categories/delete/${id}`, {
+      method: "DELETE",
     })
-    .then(response => response.ok && window.location.reload() || Promise.reject(response))
-    .catch(error => console.error(error))
-  }
+      .then((response) => {
+        if (response.ok) {
+          // UI-Update ohne Neuladen: Filtert die gelöschte ID aus dem State
+          setCategories((prev) => prev.filter((cat) => cat.id !== id));
+        } else {
+          alert("Löschen fehlgeschlagen.");
+        }
+      })
+      .catch((error) => console.error("Fehler beim Löschen:", error));
+  };
 
 
-  function deleteCategory(id){
-    fetch(`http://localhost:8081/categories/${id}`, {
-      method: "DELETE"
-    })
-    .then(response => response.ok && window.location.reload() || Promise.reject(response))
-    .catch(error => console.error(error))
-  }
 
-
+  if (loading) return <p>Lade Kategorien...</p>;
 
   return (
     <div>
-      <h1>CategoryList</h1>
-      <hr />
-      <table className="questionlist">
+      <h2>Kategorieliste</h2>
+      <table border="1" style={{ width: "100%", textAlign: "left" }}>
         <thead>
           <tr>
-            <th>Kategorie</th>
-            <th></th>
+            <th>ID</th>
+            <th>Kategoriename</th>
           </tr>
         </thead>
         <tbody>
-          {
-            categories.map(cat => <tr key={cat.id}>
-              <td>{cat.name}</td>
-              <td><a className="wastebasket" title="Loeschen" onClick={() => deleteCategory(cat.id)}>&#128465;</a></td>
-              <th><a className="addkategorie" title="hinzufügen" onClick={()=>addCategory(cat.id)}>&#128465;</a></th>
-            </tr>)
-          }
+          {categories.map((cat) => (
+            <tr key={cat.id}>
+              <td>{cat.id}</td>
+              <td>
+                <button 
+                  onClick={() => deleteCategory(cat.id)}
+                  style={{ color: "red" }}
+                >
+                  Löschen
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      <hr />
-      <button className="kategorie">
-        <Link to="/new-category">Neue Kategorie</Link>
-      </button>
     </div>
-
-  )
+  );
 }

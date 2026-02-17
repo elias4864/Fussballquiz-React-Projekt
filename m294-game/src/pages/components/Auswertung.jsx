@@ -101,6 +101,10 @@ export default function Auswertung() {
     answers: ['Argentinien', 'Brasilien', 'Kolumbien', 'Honduras'],
     correct_answer: "Argentinien"
     },
+
+   
+
+
   ];
   
 

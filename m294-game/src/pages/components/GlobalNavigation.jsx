@@ -15,6 +15,12 @@ export default function GlobalNavigation() {
       <Link to="new-category">Kategorie Hinzufügen</Link>
       <Link to="/auswertung">Auswertung</Link>
       <Link to="/fragen">Fragen</Link>
+      <Link to="/kategorilste">Kategorien</Link>
+      <Link to="/frageliste">Frageliste</Link>
+      <Link to="/new-question">Frage hinzufügen</Link>
+    
+
+      
       
     </nav>
   );
