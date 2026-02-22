@@ -16,8 +16,11 @@ describe("GlobalNavigation Komponenten Tests", () => {
         expect(screen.getByRole('link', { name: /impressum/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /quiz/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /spielregeln/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', {name:/new-category/i})).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /kategorien/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', {name: /frageliste/i})).toBeInTheDocument();
+        
         expect(screen.getByRole('link', { name: /kategorie hinzufügen/i })).toBeInTheDocument();
         expect(screen.getByRole('link',{name: /fragen/i})).toBeInTheDocument();
 

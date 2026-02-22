@@ -34,10 +34,22 @@ describe('Kategorieauswahl Komponente', () => {
       </BrowserRouter>
     );
 
+
+
+    //Verein Bztton wird mit Benutzereingabe simuliert
     const vereinButton = screen.getByText('Verein');
     fireEvent.click(vereinButton);
 
 
+
+
+
+    //Positionsbutton 
+    const PositionButton = screen.getByText('Position');
+    fireEvent.click(PositionButton);
+
+    const GeburtsdatumButton = screen.getByText('Geburtsdatum');
+    fireEvent.click(GeburtsdatumButton);
 
 
     // Hier ebenfalls vi verwenden

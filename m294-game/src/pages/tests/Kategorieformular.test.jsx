@@ -16,6 +16,8 @@ vi.mock("react-router-dom", async () => {
 
 
 
+//Arrange Kateogirformular mut Button di angelick twerden   Firevent simuliert 
+
 describe("KategoryForm Komponente", () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -28,6 +30,8 @@ describe("KategoryForm Komponente", () => {
     );
   });
 
+  // Hinnavigieren des Brwoser zum Endpoint /new-category wird simuliet  indem Komponetn eingebudne in Memoryroute
+
   it("sollte die Eingabefelder aktualisieren und das Formular absenden", async () => {
     render(
       <MemoryRouter>
@@ -37,7 +41,7 @@ describe("KategoryForm Komponente", () => {
 
     // Felder identifizieren (wir nutzen die Labels aus deinem Code)
     const nameInput = screen.getByLabelText(/Kategoriename:/i);
-    const idInput = screen.getByLabelText(/Kategorie ID:/i);
+    const idInput = screen.getByLabelText(/Kategorieid:/i);
     const questionIdInput = screen.getByLabelText(/Frage ID:/i);
    
     const submitButton = screen.getByRole("button", { name: /Hinzufügen/i });
@@ -47,6 +51,7 @@ describe("KategoryForm Komponente", () => {
     fireEvent.change(nameInput, { target: { value: "Sport", name: "name" } });
     
     fireEvent.change(idInput, { target: { value: "1", name: "id" } });
+  
     
     
     fireEvent.change(questionIdInput, { target: { value: "101", name: "question_id" } });

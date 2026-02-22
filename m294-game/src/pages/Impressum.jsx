@@ -1,149 +1,150 @@
-
-import fifaLogo from '../assets/fifa-web3.webp';//Das Impressum wird in einer Funktion definiert
+import { useState } from 'react';
+import fifaLogo from '../assets/fifa-web3.webp';
 import { useNavigate } from 'react-router-dom';
 
-
 export default function Impressum() {
-
   const datum = new Date().toLocaleDateString('de-DE');
-   const now = new Date();
-     const navigate = useNavigate();
-
-
-   const  name = "Elias Kaiser";
-   const email = "elias.kaiser@fussballag.ch"
-   const adresse = "Oerlikon, Zürich"
-
-
-   
-   const öffnungszeiten = "Montag bis Samstag: 8 -19 Uhr"
-
-
-   
-
+  const navigate = useNavigate();
   
 
-const eventhandler = () => {
-    const element = document.getElementById("fifa").innerHTML = "Fifa und vielen Ölscheichen!"
-  };
-
-
-
+  // States für das Formular und die Texte
+  const [showForm, setShowForm] = useState(false);
+  const [fifaText, setFifaText] = useState("");
+  const [spielHerkunft, setSpielHerkunft] = useState("");
+  const [auszeichnung, setAuszeichnung] = useState("");
   
-const eventhandler3 = () => {
-    const element = document.getElementById("datenschutz").innerHTML = "Bitte gib dein Name und deine E-Mail ein "
+  // Formular-Daten State
+  const [formData, setFormData] = useState({ name: '', email: '' });
+
+  const name = "Elias Kaiser";
+  const email = "elias.kaiser@fussballag.ch";
+  const adresse = "Oerlikon, Zürich";
+  const öffnungszeiten = "Montag bis Samstag: 8 - 19 Uhr";
+
+  // Handlers mit State statt getElementById
+  const eventhandler = () => setFifaText("Fifa und vielen Ölscheichen!");
+  const eventhandler1 = () => setSpielHerkunft("Das Spiel wird zu 100% in der Schweiz produziert und die Daten stammen aus dem Backend.");
+  const fussballhandler = () => setAuszeichnung("..Gewinnerspiel 2026! Ausgezeichnet mit dem schönsten Layout und den spannendsten Fragen.");
+
+  const toggleForm = () => setShowForm(!showForm);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-  const eventhandler1 = () => {
-    const element = document.getElementById("email").innerHTML = "Das Spiel wird huntertprozentig   in Schweiz produziert udn die Daten stammen aus dem Backend"
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`Danke ${formData.name}! Deine Daten wurden (simuliert) gespeichert.`);
+    setShowForm(false);
   };
-
-    
-
-    const fussballhandler = () => {
-    const element = document.getElementById("spiel").innerHTML = "..Gewinnerspiel 2026 ausgezeichnet mit dem schönsten Layout und  den spanenstend Frage und erhiellt zahleriche Auszeichnungen wie den Awart  Spiel Nr.1 für Fussballfreaks!"
-  };
-
-    
-  
 
   return (
-    <div className="impressum">
-
-      
+    <div className="impressum" style={{ padding: '20px', fontFamily: 'Arial' }}>
       <h1 className="impressum1">Impressum</h1>
-      <ol><strong>Creator des   Fussballgame :{name}</strong></ol>
-      <ul style={{ listStyleType: 'disc', textAlign:'center', paddingLeft: '20px' }}>
-      <li><strong>Stand:{datum}</strong></li>
-      <li>Kontakt: <a href={`mailto:${email}`}>{email}</a></li>
-      <li></li>
-      <li><adress>Adresse des Creators:{adresse}</adress></li>
-      <li><address> Öffnungszeiten:{öffnungszeiten}</address></li>
+      <p><strong>➡Creator des Fussballgame: {name}⬅</strong></p>
       
-    
+      <ul style={{ listStyleType: 'disc', textAlign: 'left', display: 'inline-block' }}>
+        <li><strong>Stand: {datum}</strong></li>
+        <li>Kontakt: <a href={`mailto:${email}`}>{email}</a></li>
+        <li>Adresse: {adresse}</li>
+        <li>Öffnungszeiten: {öffnungszeiten}</li>
       </ul>
-      
 
-      
-
-      <a href="tel:+41 76 493 82 07">Bei Fragen zum Kundensupport  bitte folgende Nummer anrufen: +41 76 493 82 07</a>
-
-
-      
-
-
-      <h1>Das Spiel  wurde am   {datum} herausgegeben</h1>
-
-      
-    <p id="fifa"></p>
-    <p id="email"></p>
-    <p id="spiel"></p>
-    <p id="datenschutz"></p>
-   
-   <button onClick={eventhandler}>
-        Gesponsert von....
-      </button>
-
-      <button onClick={eventhandler1}>
-        Spielherkunft: 
-
-      </button>
-
-
-      <button onClick={eventhandler3}>
-
-      </button>
-
-
-
-      <button onClick ={fussballhandler}>
-        Das Fussballquiz wurde mit der Auszeichnung...</button>
+      <br />
+      <a href="tel:+41764938207">Kundensupport: +41 76 493 82 07</a>
 
       <div style={{ marginTop: '20px' }}>
-        <img 
-          src={fifaLogo} 
-          alt="FIFA Web3 Logo"    
-          style={{ width: '400px', height: '400px' }} 
-        />
+        <button onClick={eventhandler}>Gesponsert von....</button>
+        <button onClick={eventhandler1}>Spielherkunft</button>
+        <button  className= "auszeichnungne" onClick={fussballhandler}>Auszeichnungen</button>
+        <button onClick={toggleForm} style={{ backgroundColor: 'gold' }}>
+          {showForm ? "SPielerdaten eingeben" : "Spielerdaten eingeben"}
+        </button>
       </div>
-      
 
-    <section>
-        <h2>Projektbeschreibung</h2>
-        
-        <p>Dieses Quiz wurde mit <strong>React</strong> und <strong>Vite</strong> erstellt.</p>
-        
-      </section>
+      {/* Die dynamischen Texte */}
+      <p><strong>{fifaText}</strong></p>
+      <p>{spielHerkunft}</p>
+      <p><i>{auszeichnung}</i></p>
 
-
-      <button className="home"      
-          onClick={() => navigate('/')}
-
-          style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: 'black',  color: 'red', border: 'none', borderRadius: '10px' }}
->Zurück zur Startseite</button>
-
-
-
-
-    
-      <button     
-          onClick={() => navigate('/quiz')}
-
-          style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: 'black',  color: 'red', border: 'none', borderRadius: '10px' }}
->Zurück zum Quiz</button>
-
-
-      <button     
-          onClick={() => navigate('/kategorien')}
-
-          style={{ padding: '10px 20px', cursor: 'pointer', backgroundColor: 'black',  color: 'red', border: 'none', borderRadius: '10px' }}
->Wähle eine Kategorie aus und starte das Spiel!</button>
-
-
-   
+      {/* --- DAS NEUE FORMULAR --- */}
+      {showForm && (
+        <div style={{ border: '2px solid black', padding: '20px', margin: '20px 0', borderRadius: '10px', backgroundColor: '#cf1717' }}>
+          <h3>Spieler-Registrierung</h3>
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: '10px' }}>
+              <label>Name: </label>
+              <input 
+                type="text" 
+                name="name" 
+                value={formData.name} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </div>
+            <div style={{ marginBottom: '10px' }}>
+              <label>E-Mail: </label>
+              <input 
+                type="email" 
+                name="email" 
+                value={formData.email} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </div>
 
 
+             <div style={{ marginBottom: '10px' }}>
+              <label>Telefonnummer:</label>
+              <input 
+                type="number" 
+                name="number" 
+                value={formData.number} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </div>
+             <div style={{ marginBottom: '10px' }}>
+              <label>Password:</label>
+              <input 
+                type="password" 
+                name="password" 
+                value={formData.password} 
+                onChange={handleInputChange} 
+                required= {"Gib bitte dein Password ein?"}
+              />
+            </div>
 
+
+             <div style={{ marginBottom: '10px' }}>
+              <label>Nachname: </label>
+              <input 
+                type="email" 
+                name="email" 
+                value={formData.email} 
+                onChange={handleInputChange} 
+                required 
+              />
+            </div>
+
+
+            
+
+            <button type="submit" style={{ backgroundColor: 'green', color: 'white' }}>Spielerdaten erfassen</button>
+          </form>
+        </div>
+      )}
+
+      <div style={{ marginTop: '20px' }}>
+        <img src={fifaLogo} alt="FIFA Logo" style={{ width: '200px' }} />
+      </div>
+
+      <div style={{ marginTop: '20px', display: 'flex', gap: '20px', justifyContent: 'center' }}>
+        <button onClick={() => navigate('/')} style={{ backgroundColor: 'black', color: 'red', borderRadius: '20px' }}>Home</button>
+        <button onClick={() => navigate('/quiz')} style={{ backgroundColor: 'black', color: 'red', borderRadius: '10px' }}>Quiz</button>
+        <button onClick={() => navigate('/kategorien')} style={{ backgroundColor: 'black', color: 'red', borderRadius: '10px' }}>Kategorien</button>
+      </div>
     </div>
   );
 }

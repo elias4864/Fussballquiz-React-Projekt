@@ -7,8 +7,7 @@ import { QuizButton } from './components/Buttons.jsx';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { alleFragen } from './components/QuestionDisplay.jsx'; 
 import Fussballbild from '../assets/Fussballbild.webp';
-import Ronaldo  from '../assets/Ronaldo.webp'; // Oder ein spezielles GameOver-Bild
-
+import  Gamegewonnen from '../assets/Spielgewonnen.gif';
 function SpielAnsicht() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -213,7 +212,7 @@ const eventhandler = () => {
 
   {Spielgewonnen && (
     <div className="win-container">
-       <img src={Ronaldo} alt="Winner" style={{ width: '400px' , height:'400px'}} />
+       <img src={Gamegewonnen} alt="Winner" style={{ width: '400px' , height:'400px'}} />
        <h2 style={{color: 'gold'}}> Du hast das Spiel erfolgreich geschafft und alle Fragen korrekt beantwortet!  ....</h2>
        <button onClick={eventhandler}>Du bist der... </button>
     </div>

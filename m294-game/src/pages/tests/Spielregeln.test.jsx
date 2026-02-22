@@ -29,7 +29,7 @@ describe('Spielregeln Komponente', () => {
     expect(heading).toBeDefined();
   });
 
-  it('sollte die Liste der Regeln rendern', () => {
+  it('sollte die Komponente  der Spielreegeln rendern', () => {
     render(
       <BrowserRouter>
         <Spielregeln />

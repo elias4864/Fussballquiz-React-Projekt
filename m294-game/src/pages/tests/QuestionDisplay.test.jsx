@@ -27,12 +27,21 @@ describe('Question Komponenten Tests', () => {
   
     // 3. Prüfen, ob eine der Antwortmöglichkeiten da ist mit Regex Symbol i
     expect(screen.getByText(/Was ist der Vorname des Spielers mit der Id 80?"/i)).toBeInTheDocument();
+    expect(screen.getByText(/Wie sieht die Torbilanz von Manuel Akanji vom letzten Spiel aus?"/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Oliver/i })).toBeInTheDocument();
     
     expect( screen.getByRole('button', { name: /Manuel/i })).toBeInTheDocument();
      expect(screen.getByRole('button', { name: /Kylian/i })).toBeInTheDocument();
      expect(screen.getByRole('button', {name:/Ricardo/i})).toBeInTheDocument();
-     
+     expect(screen.getByRole('button', {name:/2 Tore/i})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name:/2 Tore/i})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name:/1 Tor/i})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name:/kein Tor/i})).toBeInTheDocument();
+    expect(screen.getByRole('button', {name:/1 Assists/i})).toBeInTheDocument();
+
+
+
+
      
 
     
