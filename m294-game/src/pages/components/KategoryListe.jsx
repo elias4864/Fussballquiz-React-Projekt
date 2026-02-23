@@ -4,16 +4,16 @@ export default function KategoryListe() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newCategoryName, setNewCategoryName] = useState("");
-  const [deleteId, setDeleteId] = useState(""); // State für die ID-Eingabe zum Löschen
+  const [deleteId, setDeleteId] = useState("");
 
-  // States für die Editier-Funktion (die in deinem Template angedeutet waren)
-  const [editingId, setEditingId] = useState(null);
-  const [editName, setEditName] = useState("");
 
+  //Use Effect ruft fethcCategorie Methdoe auf , wenn alle Daten geholt werden müssen
   useEffect(() => {
     fetchCategories();
   }, []);
 
+
+  //Alle Kategorien werden  au Datenbank automatisch udn einmalig geholt  und  bei Spalte "Id" und "Kategoriename dementsprechnd die Daten  abgefüllt 
   const fetchCategories = () => {
     setLoading(true);
     fetch(`http://localhost:8081/categories/all`)
@@ -23,22 +23,36 @@ export default function KategoryListe() {
         setLoading(false);
       })
       .catch((err) => console.error("Ladefehler:", err));
-  };
+  }; 
 
-  const createCategory = () => {
-    if (!newCategoryName.trim()) return alert("Name darf nicht leer sein");
-    fetch(`http://localhost:8081/createcategory`, {
+  //Vor ABsender der createCategor yMethdoe wird die Länge de eigegeben Textes perüft und dementsprechen eien Fehlermeldugn angezeigt
+  const createCategory = (e) => {
+    if (e) e.preventDefault();
+
+    if (newCategoryName.trim().length < 3) {
+      alert("Bitte einen Namen mit mindestens 3 Zeichen eingeben.");
+      return;
+    }
+
+      // Funktion zum Erstellen einer Kategorie mit Fe
+
+    fetch(" http://localhost:8081/categories/createcategory", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newCategoryName }),
+      headers: {
+        "Content-Type": " ",
+      },
+      body: "name=" + encodeURIComponent(newCategoryName),
     })
       .then((res) => {
         if (res.ok) {
-          setNewCategoryName("");
-          fetchCategories();
+          alert("Kategorie wurde angelegt");
+          setNewCategoryName(""); // Input leeren
+          fetchCategories(); // Liste neu laden
+        } else {
+          alert("Fehler beim Anlegen: " + res.status);
         }
       })
-      .catch((err) => console.error("Fehler beim Erstellen:", err));
+      .catch((err) => console.error("Fehler:", err));
   };
 
   const deleteCategory = (id) => {
@@ -49,7 +63,7 @@ export default function KategoryListe() {
       .then((res) => {
         if (res.ok) {
           setCategories((prev) => prev.filter((cat) => cat.id !== parseInt(id)));
-          setDeleteId(""); // Input nach Löschen leeren
+          setDeleteId("");
         } else {
           alert("Fehler beim Löschen. Existiert die ID?");
         }
@@ -57,118 +71,129 @@ export default function KategoryListe() {
       .catch((err) => console.error("Fehler beim Löschen:", err));
   };
 
-
-
-
-
-  const handleSubmit = (event) => {
-
-    event.preventDefault() // verhindert das Default-Formularverhalten
-
-    if (inputs.category.trim().length<3) {
-      alert("Bitte sinnvollen Kategorienamen mit mindestens drei Zeichen eingeben")
-      return
-    }
-    fetch("http://localhost:8080/category", {
-      mode: "cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: "name="+inputs.category
-    }).then((response) => {
-      if (response.ok) {
-        alert("Kategorie wurde angelegt")
-      } else {
-        alert("Kategorie konnte nicht angelegt werden, Fehlercode: " + response.status)
-      }
-    })
-  }
   return (
-    <div className="background-kategorien" style={{ padding: "20px", fontFamily: "sans-serif", backgroundColor: "#f0fdf4", minHeight: "100vh" }}>
-      <h2 style={{ color: "#166534", textShadow: "2px 2px red"}}>Kategorieliste</h2>
-
-      {/* --- CREATE BEREICH --- */}
-      <div style={{ marginBottom: "30px", padding: "15px", border: "1px solid #bbf7d0", borderRadius: "8px", backgroundColor: "white",alignItems:"center"  }}>
-        <h3>Neue Kategorie erstellen</h3>
-        <input
-          type="text"
-          placeholder="Name der Kategorie..."
-          value={newCategoryName}
-          onChange={(e) => setNewCategoryName(e.target.value)}
-          style={{ padding: "8px", width: "250px" }}
-        />
-        <button onClick={createCategory} style={{ marginLeft: "10px", padding: "8px 15px", cursor: "pointer", backgroundColor: "#22c55e", color: "white", border: "none", borderRadius: "4px" }}>
-          Hinzufügen
-        </button>
-      </div>
-
-      {/* --- DELETE BEREICH (Mit großem Submit Button) --- */}
-      <div style={{marginBottom: "30px", 
-  padding: "20px", 
-  border: "1px solid #fecaca", 
-  borderRadius: "8px", 
-  backgroundColor: "#fff1f1",
-  /* --- ZENTRIERUNG START --- */
-  display: "flex",
-  flexDirection: "column", // Stapelt die Elemente untereinander
-  alignItems: "center",     // Zentriert alles horizontal
-  textAlign: "center"}}>
-        <h3>Kategorie per ID löschen</h3>
-        <div style={{ display: "flex", 
-  justifyContent: "center", // Horizontal zentrieren
-  alignItems: "center",     // Vertikal zentrieren (falls gewünscht)
-  width: "100%",            // Nimmt die volle Breite ein
-  margin: "20px 0", flexDirection: "column", gap: "10px", maxWidth: "300px", textAlign:"center" }}>
-          <input
-            type="number"
-            placeholder="ID eingeben (z.B. 5)"
-            value={deleteId}
-            onChange={(e) => setDeleteId(e.target.value)}
-            style={{ padding: "10px", fontSize: "1rem" }}
-          />
-          <button 
-            onClick={() => deleteCategory(deleteId)} 
-          style={{ 
-        padding: "15px", 
-        backgroundColor: "#ef4444", 
-        color: "white", 
-        border: "none", 
-        borderRadius: "5px", 
-        fontWeight: "bold",
-        fontSize: "1.1rem",
-        cursor: "pointer",
-        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+    <div
+      style={{
+        padding: "40px 20px",
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        // HIER DAS HINTERGRUNDBILD
+        backgroundImage: "url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=2000')", 
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh",
       }}
     >
-          Kategorie löschen
-          </button>
+      <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+        
+        <h2 style={{ 
+          color: "white", 
+          textAlign: "center", 
+          fontSize: "2.5rem", 
+          textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+          fontFamily: "Bodoni MT",
+          textShadow: "2px 2px violet",
+          marginBottom: "30px" 
+        }}>
+          Kategorieliste
+        </h2>
+
+        {/* --- CREATE BEREICH --- */}
+        <div style={{ 
+          marginBottom: "30px", 
+          padding: "25px", 
+          borderRadius: "15px", 
+          backgroundColor: "rgba(255, 255, 255, 0.9)", // Leicht transparent
+          backdropFilter: "blur(5px)", // Glassmorphism Effekt
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          textAlign: "center"
+        }}>
+          <h3 style={{ color: "#166534", marginTop: 0 }}>Neue Kategorie erstellen</h3>
+          <div style={{ display: "flex", justifyContent: "center", gap: "10px", flexWrap: "wrap" }}>
+            <input
+              type="text"
+              placeholder="Name der Kategorie..."
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              style={{ padding: "12px", width: "250px", borderRadius: "8px", border: "1px solid #ccc" }}
+            />
+            <button 
+              onClick={createCategory} 
+              style={{ 
+                padding: "12px 25px", 
+                cursor: "pointer", 
+                backgroundColor: "#22c55e", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "8px",
+                fontWeight: "bold",
+                transition: "transform 0.2s"
+              }}
+            >
+              Hinzufügen
+            </button>
+          </div>
+        </div>
+
+        {/* --- DELETE BEREICH --- */}
+        <div style={{ 
+          marginBottom: "30px", 
+          padding: "25px", 
+          borderRadius: "15px", 
+          backgroundColor: "rgba(255, 235, 235, 0.93)", 
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          textAlign: "center"
+        }}>
+          <h3 style={{ color: "#991b1b", marginTop: 0 }}>Kategorie per ID löschen</h3>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "15px" }}>
+            <input
+              type="number"
+              placeholder="ID eingeben (z.B. 5)"
+              value={deleteId}
+              onChange={(e) => setDeleteId(e.target.value)}
+              style={{ padding: "12px", width: "100%", maxWidth: "250px", borderRadius: "8px", border: "1px solid #fca5a5" }}
+            />
+            <button 
+              onClick={() => deleteCategory(deleteId)} 
+              style={{ 
+                padding: "12px 30px", 
+                backgroundColor: "#ef4444", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "8px", 
+                fontWeight: "bold",
+                cursor: "pointer"
+              }}
+            >
+              Kategorie löschen
+            </button>
+          </div>
+        </div>
+
+        {/* --- TABELLE --- */}
+        <div style={{ overflowX: "auto", borderRadius: "15px", boxShadow: "0 8px 32px rgba(0,0,0,0.2)" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", backgroundColor: "white" }}>
+            <thead>
+              <tr style={{ backgroundColor: "#fbbf24", color: "#451a03" }}>
+                <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>ID</th>
+                <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>Kategoriename</th>
+                <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>Aktion</th>
+
+                
+              </tr>
+            </thead>
+            <tbody>
+              {loading ? (
+                <tr><td colSpan="2" style={{ padding: "20px", textAlign: "center" }}>Lade Daten...</td></tr>
+              ) : (
+                categories.map((cat) => (
+                  <tr key={cat.id} style={{ textAlign: "center", borderBottom: "1px solid #eee" }}>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
-
-      <hr />
-
-
-        <table border="2" cellPadding="10" style={{ width: "100%", borderCollapse: "collapse", backgroundColor: "white" }}>
-          <thead>
-            <tr style={{ backgroundColor: "#fbbf24" }}>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Aktionen</th>
-            </tr>
-          </thead>
-          <tbody>
-            {categories.map((cat) => (
-              <tr key={cat.id} style={{ textAlign: "center" }}>
-                <td>{cat.id}</td>
-                <td>{cat.name || "Kein Name"}</td>
-                <td>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-    
     </div>
   );
 }

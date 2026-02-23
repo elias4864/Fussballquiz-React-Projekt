@@ -2,9 +2,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Kategorien from "../../assets/Kategorien.webp";
+
+
 export default function KategoryForm() {
   const [categoryName, setCategoryName] = useState("");
-  const [categoryId, setCategoryId] = useState(""); // Kleingeschrieben für Konsistenz
+  const [category_id, setcategory_id] = useState(""); // Kleingeschrieben für Konsistenz
+
+  
 
   const navigate = useNavigate();
 
@@ -17,10 +21,16 @@ export default function KategoryForm() {
       return;
     }
 
-    // 2. Bestätigung
+    
+
+    // 2. Bestätigung vor dem Absenden der Kategorien ob Kategiry mit dem vom User durch Button validierten EIngabe des Values "categoryname" wirklich speichert
     const confirmSend = window.confirm(`Möchtest du die Kategorie "${categoryName}" wirklich speichern?`);
     if (!confirmSend) return;
 
+
+
+
+    //Post Methdoe um eine neue Kategorie hinzuzufügen
     const url = "http://localhost:8081/categories/createcategory";
 
     // 3. Try-Catch Block
@@ -32,8 +42,8 @@ export default function KategoryForm() {
         },
         // Sende Name und ID ans Backend
         body: JSON.stringify({ 
-          id: categoryId, 
-          name: categoryName 
+          id: category_id, 
+          name: categoryName
         }), 
       });
 
@@ -50,32 +60,37 @@ export default function KategoryForm() {
   };
 
   return (
-    // ZENTRIERUNG: Flexbox sorgt für die mittige Ausrichtung
+    // ZENTRIE   RUNG: Flexbox sorgt für die mittige Ausrichtung
     <div style={{ 
       display: "flex", 
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: "center", 
       minHeight: "100vh",
-      fontFamily: "Arial, sans-serif"
+      fontFamily: "Arial, sans-serif",
+      backgroundImage: `url(${Kategorien})`,
+      backgroundSize:"cover",
     }}>
+
       
       <div style={{ 
         padding: "30px", 
         border: "1px solid #ccc", 
         borderRadius: "10px", 
-        backgroundColor: "#f9f9f9",
+        backgroundColor: "#5b116a",
+        width: "300px",
         textAlign: "center", // Zentriert den Text innerhalb der Box
         boxShadow: "0 4px 8px rgba(0,0,0,0.1)"
+        
       }}>
         <h2  className="background-kategorien" style={{ color: "orange",fontFamily: " monospace",textShadow:"2px 2px blue" }}>Neue Kategorie erstellen</h2>
         
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
           <div>
-            <label htmlFor="category" style={{ display: "block", marginBottom: "5px" }}>Kategoriename:</label>
+            <label htmlFor="category_name" style={{ display: "block", marginBottom: "5px" }}>Kategoriename:</label>
             <input
               type="text"
-              id="category"
+              id="category_name"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
               required
@@ -84,12 +99,12 @@ export default function KategoryForm() {
           </div>
 
           <div>
-            <label htmlFor="categoryid" style={{ display: "block", marginBottom: "5px" ,textAlign:"center"}}>Kategorie-ID (Zahl):</label>
+            <label htmlFor="category_id" style={{ display: "block", marginBottom: "5px" ,textAlign:"center"}}>Kategorie-ID (Zahl):</label>
             <input
               type="number"
-              id="categoryid"
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
+              id="category_id"
+              value={category_id}
+              onChange={(e) => setcategory_id(e.target.value)}
               required
               style={{ padding: "8px", width: "200px" }}
             />

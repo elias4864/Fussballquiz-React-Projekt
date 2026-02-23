@@ -13,9 +13,19 @@ export default function Impressum() {
   const [spielHerkunft, setSpielHerkunft] = useState("");
   const [auszeichnung, setAuszeichnung] = useState("");
   
-  // Formular-Daten State
-  const [formData, setFormData] = useState({ name: '', email: '' });
 
+
+
+
+
+  // Formular-Daten State mit Propertys name, nachname, email number, password
+const [formData, setFormData] = useState({ 
+    name: 'Elias', 
+    nachname: 'Kaiser', 
+    email: 'elias.kaiser@gmx.ch', 
+    number: '076 492 83 05', 
+    
+  }); 
   const name = "Elias Kaiser";
   const email = "elias.kaiser@fussballag.ch";
   const adresse = "Oerlikon, Zürich";
@@ -42,7 +52,7 @@ export default function Impressum() {
   return (
     <div className="impressum" style={{ padding: '20px', fontFamily: 'Arial' }}>
       <h1 className="impressum1">Impressum</h1>
-      <p><strong>➡Creator des Fussballgame: {name}⬅</strong></p>
+      <p className="bounce"><strong>➡Creator des Fussballgame: {name}⬅</strong></p>
       
       <ul style={{ listStyleType: 'disc', textAlign: 'left', display: 'inline-block' }}>
         <li><strong>Stand: {datum}</strong></li>
@@ -59,7 +69,7 @@ export default function Impressum() {
         <button onClick={eventhandler1}>Spielherkunft</button>
         <button  className= "auszeichnungne" onClick={fussballhandler}>Auszeichnungen</button>
         <button onClick={toggleForm} style={{ backgroundColor: 'gold' }}>
-          {showForm ? "SPielerdaten eingeben" : "Spielerdaten eingeben"}
+          {showForm ? " Spielerdaten eingeben " : "Melde dich an"}
         </button>
       </div>
 
@@ -141,7 +151,7 @@ export default function Impressum() {
       </div>
 
       <div style={{ marginTop: '20px', display: 'flex', gap: '20px', justifyContent: 'center' }}>
-        <button onClick={() => navigate('/')} style={{ backgroundColor: 'black', color: 'red', borderRadius: '20px' }}>Home</button>
+        <button onClick={() => navigate('/')} style={{ backgroundColor: 'black', color: 'red', borderRadius: '20px' }}>Zur Startsteite</button>
         <button onClick={() => navigate('/quiz')} style={{ backgroundColor: 'black', color: 'red', borderRadius: '10px' }}>Quiz</button>
         <button onClick={() => navigate('/kategorien')} style={{ backgroundColor: 'black', color: 'red', borderRadius: '10px' }}>Kategorien</button>
       </div>

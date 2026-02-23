@@ -4,16 +4,18 @@ export default function Kategorieauswahl() {
   const navigate = useNavigate();
 
   const kategorien = [
-    { id: 10, name: "Nationalität" },
-    { id: 20, name: "Verein" },
-    { id: 30, name: "Position" },
-    { id: 40, name: "Karriere" },
-    { id: 50, name: "Spielerstatus" },
-    { id: 55, name: "Geburtsdatum" },
-    { id: 14, name: "Legenden" },
+    { category_id: 10, name: "Nationalität" },
+    { category_id: 20, name: "Verein" },
+    { category_id: 30, name: "Position" },
+    { category_id: 40, name: "Karriere" },
+    { category_id: 50, name: "Spielerstatus" },
+    { category_id: 55, name: "Geburtsdatum" },
+    { category_id: 14, name: "Legenden" },
     { id: 21, name: "Aktive Spieler" },
     { id: 35, name: "Spieler" },
     {id: 45, name:"Team"},
+
+
   
   ];
 

@@ -65,7 +65,6 @@ function App() {
           <Route path="quiz" element={<Spielansicht />} />
           <Route path="spielregeln" element={<Spielregeln />} />
           <Route path="about" element={<Impressum />} />
-         <Route path="*" element={<KategoryListe />} />
           <Route path="auswertung" element={<Auswertung />} />
           <Route path="fragen" element = {<QuestionDisplay />} />
           <Route path="frageliste" element={<Frageliste />} />

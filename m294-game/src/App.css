@@ -571,12 +571,17 @@ background-color: #c4be0d;
 
 
 .background-kategorien {
-  /* Falls das Bild im public-Ordner liegt */
+  /* Falls das Bild im apublic-Ordner liegt */
   background-image: url('/assets/Kategorien.webp'); 
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   width: 100%;
+}
+
+.bounce{
+      animation: bounce-titel 3s infinite; /* Der Name muss mit @keyframes übereinstimmen */
+
 }
 
 

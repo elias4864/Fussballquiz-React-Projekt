@@ -54,9 +54,12 @@ const submit = async (e) => {
       answers: answers,
     };
 
+
+
+   
     // 4. Senden (Fetch)
     try {
-      const response = await fetch("http://localhost:8081/questions", {
+      const response = await fetch("http://localhost:8081/questions/createcategory", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -80,18 +83,18 @@ const submit = async (e) => {
   };
 
   return (
-    <div style={{ background: "#222", color: "orange", padding: "20px", borderRadius: "8px", maxWidth: "500px" }}>
+    <div style={{ background: "#05377c", color: "orange", padding: "20px", borderRadius: "8px", maxWidth: "500px", justifyContent: "center", }}>
       <h2>Neue Frage hinzufügen</h2>
       <form onSubmit={submit}>
         <div style={{ marginBottom: "15px" }}>
-          <label>name der Frage </label>
+          <label>Name der Frage </label>
           <input
             type="text"
             value={questionText}
             onChange={(e) => setQuestionText(e.target.value)}
             placeholder="z.B. SQL steht für"
             required
-            style={{ width: "100%", padding: "8px", marginTop: "5px",  }}
+            style={{ width: "100%", padding: "8px", marginTop: "5px",  textAlign:"center" }}
           />
         </div>
 
