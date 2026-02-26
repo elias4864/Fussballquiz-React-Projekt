@@ -91,7 +91,7 @@ const eventhandler = () => {
     if (quote >= 0.8) return { sterne: "⭐⭐⭐⭐", text: "Ausgezeichnete Leistung-fast so gut wie Ronalod  " };
     if (quote >= 0.5) return { sterne: "⭐⭐⭐", text: "Solide Mittelklasse-Du kannst dich noch steigern bis zum Spitzen" };
     if (quote > 0) return { sterne: "⭐⭐", text: "Da ist noch Luft nach oben – Ab ins Quiztraining!" };
-    return { sterne: "⭐", text: "Amateur Fussball-Trainiere dein Allgemeinwissem über Fussball  täglich häufiger!." };
+    return { sterne: "⭐", text: "Amateur Fussball-Trainiere dein Allgemeinwissem über Fussball  täglich häufiger!.",fontSize: "200px" };
   };
 
   const bewertung = getBewertung();
@@ -213,7 +213,7 @@ const eventhandler = () => {
   {Spielgewonnen && (
     <div className="win-container">
        <img src={Gamegewonnen} alt="Winner" style={{ width: '400px' , height:'400px'}} />
-       <h2 style={{color: 'gold'}}> Du hast das Spiel erfolgreich geschafft und alle Fragen korrekt beantwortet!  ....</h2>
+       <h2 className='typing' style={{color: 'gold'}}> Du hast das Spiel erfolgreich geschafft und alle Fragen korrekt beantwortet!  ....</h2>
        <button onClick={eventhandler}>Du bist der... </button>
     </div>
   )}
@@ -253,7 +253,10 @@ const eventhandler = () => {
                 </tr>
 
               </tbody>
-               {Spielgewonnen && <h2 style={{color: 'gold'}}>🏆 SPIEL GEWONNEN! (Alle Antworten  korrekt!)</h2>}
+               { Spielgewonnen && <h2 style={{color: 'gold', fontSize:"100px",animation: `
+        typing 3.5s steps(30, end), 
+        blink-caret 0.75s step-end infinite
+      `}}>🏆 SPIEL GEWONNEN!   </h2>}
                
 
           

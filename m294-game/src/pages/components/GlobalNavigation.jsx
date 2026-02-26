@@ -17,7 +17,7 @@ export default function GlobalNavigation() {
       <Link to="/new-question">Frage hinzufügen</Link>
       <Link to="/kategorien">Kategorien</Link>
       <Link to="/new-category">Kategorie Hinzufügen</Link>
-       <Link to="/kategorieliste">Kategorien</Link>
+       <Link to="/kategorieliste">Kategorieliste</Link>
 
     
 

@@ -6,8 +6,10 @@ const ProgressBar = ({ richtig, gesamt }) => {
   const prozent = gesamt > 0 ? Math.round((richtig / gesamt) * 100) : 0;
   const getFarbe = (p) => {
     if (p < 50) return '#e74c3c'; // Rot
-    if (p < 80) return '#f1c40f'; // Gelb
-    if(p==100 )return '#2ecc71'; // Grün
+    if (p < 80) return '#f1c40f';
+    if(p<120) return 'blue';// Gelb
+    if(p==100 )return '#2ecc71'; 
+    
   };
 
   return (

@@ -44,12 +44,23 @@ describe('Kategorieauswahl Komponente', () => {
 
 
 
-    //Positionsbutton 
+
+   //Buttons für Navigationsleiste  
     const PositionButton = screen.getByText('Position');
     fireEvent.click(PositionButton);
 
+
+    //Geburtstagsdatum Button wird simuliert
     const GeburtsdatumButton = screen.getByText('Geburtsdatum');
     fireEvent.click(GeburtsdatumButton);
+
+
+    const Legendebutton = screen.getByText('Team');
+    fireEvent.click(Legendebutton);
+
+
+
+
 
 
     // Hier ebenfalls vi verwenden

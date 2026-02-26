@@ -71,7 +71,7 @@ function App() {
           <Route path="new-question" element={<Frageform />} />
 
           <Route path="kategorien" element={<Kategorieauswahl />} />
-          <Route path="kategorieliste" element={<KategoryListe />} />
+          <Route path="kategorieliste" element={<KategoryListe/>} />
           <Route path="new-category" element={<KategoryForm />} />
 
          

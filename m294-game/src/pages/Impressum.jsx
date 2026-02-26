@@ -10,9 +10,14 @@ export default function Impressum() {
   // States für das Formular und die Texte
   const [showForm, setShowForm] = useState(false);
   const [fifaText, setFifaText] = useState("");
+  const [spiel, setSpiel] = useState("");
   const [spielHerkunft, setSpielHerkunft] = useState("");
   const [auszeichnung, setAuszeichnung] = useState("");
+
+  const [isRegistered, setIsRegistered] = useState(false); // NEU: Status für Konto-Ansicht
   
+
+
 
 
 
@@ -24,6 +29,8 @@ const [formData, setFormData] = useState({
     nachname: 'Kaiser', 
     email: 'elias.kaiser@gmx.ch', 
     number: '076 492 83 05', 
+    telefon: '044 311 32 72 '
+
     
   }); 
   const name = "Elias Kaiser";
@@ -31,12 +38,17 @@ const [formData, setFormData] = useState({
   const adresse = "Oerlikon, Zürich";
   const öffnungszeiten = "Montag bis Samstag: 8 - 19 Uhr";
 
+
+
   // Handlers mit State statt getElementById
   const eventhandler = () => setFifaText("Fifa und vielen Ölscheichen!");
   const eventhandler1 = () => setSpielHerkunft("Das Spiel wird zu 100% in der Schweiz produziert und die Daten stammen aus dem Backend.");
   const fussballhandler = () => setAuszeichnung("..Gewinnerspiel 2026! Ausgezeichnet mit dem schönsten Layout und den spannendsten Fragen.");
-
   const toggleForm = () => setShowForm(!showForm);
+  const bestesspiel = () => 
+   setSpiel("..das beste Fussballquiz 2026 für Fussballinteressierte");
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,21 +74,25 @@ const [formData, setFormData] = useState({
       </ul>
 
       <br />
-      <a href="tel:+41764938207">Kundensupport: +41 76 493 82 07</a>
+      <a href="tel:+41764938207" style={{backgroundColor:"red"}}>Kundensupport: +41 76 493 82 07</a>
 
       <div style={{ marginTop: '20px' }}>
         <button onClick={eventhandler}>Gesponsert von....</button>
         <button onClick={eventhandler1}>Spielherkunft</button>
         <button  className= "auszeichnungne" onClick={fussballhandler}>Auszeichnungen</button>
+        <button onClick={bestesspiel}>Topspiel 2026</button>
+
+
+        
         <button onClick={toggleForm} style={{ backgroundColor: 'gold' }}>
           {showForm ? " Spielerdaten eingeben " : "Melde dich an"}
         </button>
       </div>
 
-      {/* Die dynamischen Texte */}
       <p><strong>{fifaText}</strong></p>
       <p>{spielHerkunft}</p>
       <p><i>{auszeichnung}</i></p>
+
 
       {/* --- DAS NEUE FORMULAR --- */}
       {showForm && (
@@ -104,6 +120,19 @@ const [formData, setFormData] = useState({
               />
             </div>
 
+
+            
+
+            <div style={{marginBottom: '30px'}}>
+              <label>Nachname</label>
+                <input
+                type="nachname" 
+                name="nachname" 
+                value={formData.nachname} 
+                onChange={handleInputChange} 
+                required 
+               />
+            </div>
 
              <div style={{ marginBottom: '10px' }}>
               <label>Telefonnummer:</label>
@@ -147,7 +176,9 @@ const [formData, setFormData] = useState({
       )}
 
       <div style={{ marginTop: '20px' }}>
-        <img src={fifaLogo} alt="FIFA Logo" style={{ width: '200px' }} />
+      
+    {spiel && <p>{spiel}</p>}
+        <img src={fifaLogo} alt="FIFA Logo" style={{ width: '300px', legnth: '400px'}} />
       </div>
 
       <div style={{ marginTop: '20px', display: 'flex', gap: '20px', justifyContent: 'center' }}>

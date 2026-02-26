@@ -42,7 +42,6 @@ describe('Spielregeln Komponente', () => {
     expect(screen.getByText(/Beantworte die Frage durch  Klicken auf die Antwort Buttons/i)).toBeDefined();
     expect(screen.getByRole(/Nur eine Antwort der 4 möglichen Antworten  ist jeweils korrekt/i)).toBeDefined();
 
-    expect(screen.get)
     
   });
 
@@ -55,13 +54,18 @@ describe('Spielregeln Komponente', () => {
       </BrowserRouter>
     );
 
-    const button = screen.getByRole('button', { name: /Kategorie wählen/i });
+    const button = screen.getByRole('button', { name: /Kategorie wählen und Spiel starten /i });
     
     // Simuliere den Klick
     fireEvent.click(button);
 
+    const button2  = screen.getByRole('button', {name:/Eine neue Kategorie oder Frage wird hinzugefügt/i});
+  
+    fireEvent.click(button2);
+
     // Prüfe, ob navigate mit dem richtigen Pfad aufgerufen wurde mit Assart
     expect(mockNavigate).toHaveBeenCalledWith('/kategorien');
+    expect(mockNavigate).toHaveBeenCalledWith('/new-category');
   });
 
 

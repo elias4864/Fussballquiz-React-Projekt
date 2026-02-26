@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Frageform() {
   const [questionText, setQuestionText] = useState("");
+  const navigate = useNavigate();
+
   const [answers, setAnswers] = useState([
     { answer: "", correct: false },
     { answer: "", correct: false },
@@ -48,7 +51,7 @@ const submit = async (e) => {
     );
     
     if (!confirmSend) return; // Abbrechen, wenn der User "Abbrechen" klickt
-    // 3. Payload vorbereiten, der die Eingabe der Frage im question paamet abepscie rudn dei antwroten in answers
+    // 3. Payload vorbereiten, der die Eingabe der Frage  im question paamet abepscie rudn dei antwroten in answers
     const payload = {
       question: questionText,
       answers: answers,
@@ -59,7 +62,7 @@ const submit = async (e) => {
    
     // 4. Senden (Fetch)
     try {
-      const response = await fetch("http://localhost:8081/questions/createcategory", {
+      const response = await fetch("http://localhost:8081/questions/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -83,7 +86,7 @@ const submit = async (e) => {
   };
 
   return (
-    <div style={{ background: "#05377c", color: "orange", padding: "20px", borderRadius: "8px", maxWidth: "500px", justifyContent: "center", }}>
+    <div style={{ background: "#05377c", color: "orange", padding: "20px", borderRadius: "8px", maxWidth: "500px", justifyContent: "center", textAlign:"center",alignItems: "center",width:"100vw",minHeight:"100vh",}}>
       <h2>Neue Frage hinzufügen</h2>
       <form onSubmit={submit}>
         <div style={{ marginBottom: "15px" }}>
@@ -108,7 +111,8 @@ const submit = async (e) => {
               value={ans.answer}
               onChange={(e) => handleAnswerChange(i, e.target.value)}
               required
-              style={{ marginRight: "10px" }}
+              placeholder="Antwort ist korrekt"
+              style={{ marginRight: "10px",borderRadius:"8px",maxWidth:"500pxs",textAlign:"center" }}
             />
             <input
               type="radio"
@@ -124,6 +128,14 @@ const submit = async (e) => {
         <button className="button button1" type="submit" style={{ cursor: "pointer", padding: "10px 20px",  }}>
           Frage absenden
         </button>
+
+        <button 
+              type="button" 
+              onClick={() => navigate("/frageliste")} // Pfad zu deiner Frageliste anpassen
+              style={{ cursor: "pointer", padding: "10px 15px", backgroundColor: "white", color: "#05377c", border: "none", borderRadius: "5px", fontWeight: "bold", backgroundColor: "gold" }}
+            >
+              Zur Frageliste
+            </button>
       </form>
 
       {savedQuestion && (

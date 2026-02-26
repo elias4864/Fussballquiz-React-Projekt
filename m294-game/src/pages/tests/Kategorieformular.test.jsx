@@ -42,15 +42,20 @@ describe("KategoryForm Komponente", () => {
     // Felder identifizieren (wir nutzen die Labels aus deinem Code)
     const nameInput = screen.getByLabelText(/Kategoriename:/i);
     const idInput = screen.getByLabelText(/Kategorieid:/i);
-    const questionIdInput = screen.getByLabelText(/Frage ID:/i);
+
+
+
    
     const submitButton = screen.getByRole("button", { name: /Hinzufügen/i });
-    
+    const 
+    const deleteButton = screen.getByRole("button",{name: /Kategorie per ID löschen/i});
+
+
 
     // 3. Benutzereingaben simulieren und einzelen Kategorien werden validiert 
-    fireEvent.change(nameInput, { target: { value: "Sport", name: "name" } });
     
     fireEvent.change(idInput, { target: { value: "1", name: "id" } });
+    
   
     
     
@@ -58,11 +63,12 @@ describe("KategoryForm Komponente", () => {
 
 //Absesnden des Kategoriebuttons  wird geklickt
     fireEvent.click(submitButton);
+    fireEvent.click(deleteButton);
 
     // 5. Überprüfen, ob fetch mit den richtigen Daten aufgerufen wurde, asynchron auf Backend Server warten  bis er Objekt aus Datenbank holt(fetcht)
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
-        "http://localhost:8081/categories",
+        "http://localhost:8081/categories/createcategory",
         expect.objectContaining({
           method: "POST",
           body: JSON.stringify({

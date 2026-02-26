@@ -298,6 +298,16 @@ background-color: #c4be0d;
 
 
 
+.startbutton {
+  padding: 20px 40px; /* Innenabstand: oben/unten links/rechts */
+  font-size: 24px;    /* Schriftgröße */
+  min-width: 300px;   /* Mindestbreite */
+  cursor: pointer;
+  width: 300px;
+}
+
+
+
 .statusbild{
   width: 200px;
   height:200px;
@@ -582,6 +592,22 @@ background-color: #c4be0d;
 .bounce{
       animation: bounce-titel 3s infinite; /* Der Name muss mit @keyframes übereinstimmen */
 
+}
+
+
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 120% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: gold }
+}
+.time{
+  background-color: brown;
+  text-align: left;
 }
 
 

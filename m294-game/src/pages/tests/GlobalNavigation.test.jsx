@@ -23,7 +23,7 @@ describe("GlobalNavigation Komponenten Tests", () => {
         
         expect(screen.getByRole('link', { name: /kategorie hinzufügen/i })).toBeInTheDocument();
         expect(screen.getByRole('link',{name: /fragen/i})).toBeInTheDocument();
-
+        expect(screen.getByRole('link',{name:/frage hinzufügen/i})).toBeInTheDocument();
         
         expect(screen.getByRole('link', { name: /auswertung/i })).toBeInTheDocument();
        

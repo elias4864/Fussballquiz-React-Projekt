@@ -21,7 +21,7 @@ describe("Frageformular wird getestet mit Benutereingaben", () => {
   });
 
 
-  //Act  die Fragekomponente wird gemockt
+  //Frageformular wird gemockt 
   test("sollte das Formular ausfüllen und den korrekten Payload senden", async () => {
     render(<Frageform />);
 
@@ -29,18 +29,21 @@ describe("Frageformular wird getestet mit Benutereingaben", () => {
     const questionInput = screen.getByPlaceholderText(/z.B. SQL steht für/i);
     fireEvent.change(questionInput, { target: { value: "Was ist React?" } });
 
-    // 2. Antworten eingeben
+    // 4 Antworten wrden die Inputs mit Index darstestellt
     const answerInputs = screen.getAllByRole("textbox");
     // Der erste TextBox-Input ist die Frage, danach kommen die Antworten
     fireEvent.change(answerInputs[1], { target: { value: "Eine Bibliothek" } });
     fireEvent.change(answerInputs[2], { target: { value: "Ein Framework" } });
+    fireEvent.change(answerInputs[3], {targets: {value: "Eine Programmiersprache"} });
 
+    
     // 3. Die erste Antwort als korrekt markieren (Radio Button)
     const radioButtons = screen.getAllByRole("radio");
     fireEvent.click(radioButtons[0]);
 
     // 4. Formular abschicken und eingeben Daten werden validiert und ans backend gesendet mit Post-Methode
     const submitButton = screen.getByRole("button", { name: /Frage hinzufügen/i });
+    
     fireEvent.click(submitButton);
 
     //Act einzelne  Fragen werden simuliert/gemockt mit  der Call  KOnstante und 
