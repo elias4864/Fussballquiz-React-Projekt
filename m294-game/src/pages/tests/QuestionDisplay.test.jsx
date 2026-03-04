@@ -28,7 +28,6 @@ describe('Question Komponenten Tests', () => {
     expect(screen.getByRole('button', { name: /Manuel Akanji/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: / Cristiano Ronaldo/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: / Breel Embolo/i })).toBeInTheDocument();
-    expect(screen.get)
 
 
     // 4. ASSERT: Zweite Frage (Maradona)

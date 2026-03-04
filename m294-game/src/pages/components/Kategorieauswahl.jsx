@@ -14,6 +14,8 @@ export default function Kategorieauswahl() {
     { id: 21, name: "Aktive Spieler" },
     { id: 35, name: "Spieler" },
     {id: 45, name:"Team"},
+    {id: 4, name:"Geschlecht"}
+
 
    
 

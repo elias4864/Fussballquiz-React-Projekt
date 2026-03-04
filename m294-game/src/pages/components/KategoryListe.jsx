@@ -41,7 +41,7 @@ function KategoryListe() {
       return;
     }
 
-    // WICHTIG: Sende JSON mit dem Feldnamen 'category_name' (passend zur Java-Entity)
+    ///Daten aus Bcken fetchen mit dem JSOB Ojekt und dem Body des Kategoirnamens als Props die gemapt werden
     fetch("http://localhost:8081/categories/createcategory", {
       method: "POST",
       headers: {
@@ -122,6 +122,7 @@ function KategoryListe() {
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
               style={{ padding: "12px", width: "250px", borderRadius: "8px", border: "1px solid #ccc" }}
+              required
             />
             <button onClick={createCategory} style={{ 
                 padding: "12px 25px", cursor: "pointer", backgroundColor: "#22c55e", 
@@ -145,6 +146,7 @@ function KategoryListe() {
               value={deleteId}
               onChange={(e) => setDeleteId(e.target.value)}
               style={{ padding: "12px", width: "100%", maxWidth: "250px", borderRadius: "8px", border: "1px solid #fca5a5" }}
+              required
             />
             <button onClick={() => deleteCategory(deleteId)} style={{ 
                 padding: "12px 30px", backgroundColor: "#ef4444", color: "white", 

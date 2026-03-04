@@ -16,7 +16,6 @@ export default function Home() {
   //Drop Down Menu für 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
-  // Funktion zum Sprachwechsel
   const selectLanguage = (lang) => {
     setLanguage(lang);
     setDropdownOpen(false); // Menü nach Auswahl schließen
@@ -25,6 +24,7 @@ export default function Home() {
   return (
     <div className="home" style={{ textAlign: 'center', overflow: 'hidden' }}>
       <h2 className="willkommen">
+        {language === 'de' && "Willkommen zum Fussballgame 2026!"}
         {language === 'en' && "Welcome to the  Football Game 2026!"}
         {language === 'fr' && "Bienvenue au jeu de foot 2026 !"}
         {language === 'it' && "Benvenuti al gioco del calcio 2026!"}

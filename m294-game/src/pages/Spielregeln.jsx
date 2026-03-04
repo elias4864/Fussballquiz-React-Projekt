@@ -26,7 +26,7 @@ export default function Spielregeln() {
           <li>Es wird nur eine Kategorie wellche welche zu einem Thema der Frag past und  muss mindestens 3 Zeichen lang sein im Katgorieformular</li>
           <li>Die Länge der Frage die der Spieler hinzufügt zum Quiz muss mindestens 3 Buchstaben lang sein damit sie vom System validiert wird, sowie das Kategoriefomular bentötigt die Id der  Kategorie sowei der Name der Kategorie damit sie im backend hinzugefüt wird zu der Kategorieliste</li>
           <h2><ins>Spielerweiterung:</ins></h2><li>Um das Spiel  spannender zu machen kann eine  zusätzliche Frage mit einer Id  und dementsprechen eine Kateogrie  hinzugefügt werden entweder im Formular oder auch über Postman auf dem  entsprechenden Endpoint  im Body mit den Attributen   wie auch vom User gelöscht werden</li>
-          <h2>Um eine neue Frage/Kateogri ins Quiz zu integrieren muss sei im Array alleFragen hinzugefügt werden ,bzw im Objekt kateogrien  wo sie wie in eienr Bibliothekt abgespeichert werden  </h2> 
+          <h2>Um eine neue Frage/Kateogri ins Quiz zu integrieren muss sei im Array alleFragen hinzugefügt werden und somit auch in der Spielansich die neu Frage erscheint ,bzw im Objekt kateogrien  wo sie wie in eienr Bibliothekt abgespeichert werden  </h2> 
          <h2 className="spielregeln"><b><ins>Ziel des Spiels:</ins> Du hast das Fussballspiel gewonnen falls du alle 8 Antworten korrekt beantwortet hast und verloren falls dein Score  negativ ist</b></h2>
          </ul>
      
