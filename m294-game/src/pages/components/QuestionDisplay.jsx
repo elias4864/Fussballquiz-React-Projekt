@@ -69,7 +69,7 @@
 
   
 
-    { id: 8, catId: 80, question : "Was ist der Vorname des Spielers mit der Id 80?",
+    { id: 8, catId: 80, question : "Welcher dieser  Fussballspieler   hat den Vornamen eines legendären Torhüters ?",
       answers: ["Oliver","Manuel","Kylian","Ricardo"],
       correct_answer:"Oliver"
 
@@ -80,6 +80,13 @@
     answers: ['Argentinien', 'Brasilien', 'Kolumbien', 'Honduras'],
     correct_answer: "Argentinien"
     },
+
+    { id: 10, catId:  "Welcher dieser Torhüter ist eine Legende der 19-ger Jahre?",
+      answers: ['Oliver Kahn', 'Iker Casillas', 'Gianluigi Buffon','Yann Sommer'],
+      correct_answer: "Oliver Kahn"
+
+
+    }
   ];
 
   

@@ -63,7 +63,7 @@ const [formData, setFormData] = useState({
 
   return (
     <div className="impressum" style={{ padding: '20px', fontFamily: 'Arial' }}>
-      <h1 className="impressum1">Impressum</h1>
+      <h2 className="impressum1">Impressum</h2>
       <div className="line">
       <h2 className="pop-outin"><strong>Creator des Fussballgame: {name}</strong></h2>
       </div>

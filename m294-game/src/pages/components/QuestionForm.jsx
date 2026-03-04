@@ -23,6 +23,12 @@ export default function Frageform() {
   const submit = async (e) => {
     e.preventDefault();
 
+
+      if (questionText.trim().length < 3) {
+      alert("Bitte einen Namen eingeben, der mindestens 3 Zeichen lang ist.");
+      return;
+    }
+
     // 1. Validierung
     if (!questionText.trim() || !answers.correctAnswer.trim()) {
       return alert("Bitte Fragetext und richtige Antwort ausfüllen.");

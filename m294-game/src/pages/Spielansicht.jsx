@@ -81,9 +81,9 @@ const eventhandler = () => {
   const handleQuizEnd = () => {
   navigate('/auswertung', { 
     state: { 
-      ergebnisse: alleFragenAntworten, // Array mit Fragen und Antworten
+      ergebnisse: score, // Array mit Fragen und Antworten
       score: aktuellerScore, 
-      richtig: anzahlRichtig, 
+      richtig: an, 
       falsch: anzahlFalsch 
     } 
   });
@@ -172,13 +172,13 @@ const eventhandler = () => {
             className={`startbutton ${btnColor === 'green' ? 'active-green' : 'default-red'}`} 
             onClick={handleStartClick}
           >
-            ⇛ Fussballgame starten ⇚
+            ⇛ Fussballgame starten⇚
           </button>
         </div>
       ) : frageIndex < gefilterteFragen.length ? (
         <div className="quiz-container">
           <div className="session-header">
-            <h1><span>Frage: {frageIndex + 1} / {gefilterteFragen.length}</span></h1>
+            <h2 className='fragen'><span>Frage: {frageIndex + 1} / {gefilterteFragen.length}</span></h2>
           </div>
           <div className="image-container">
             <img src={statusBild} className="statusbild" alt="Status" />
@@ -202,7 +202,7 @@ const eventhandler = () => {
               />
             ))}
           </div>
-          <h1 className="score"><span>Aktueller Score: {session.score}</span></h1>
+          <h2 className="score"><span>Aktueller Score: {session.score}</span></h2>
         </div>
       ) : (
         <div className="ergebnis-screen">
@@ -278,7 +278,7 @@ const eventhandler = () => {
             <button className="nav-btn" onClick={() => navigate('/kategorien')}>Zu den Kategorien</button>
             <button className="retry-btn" onClick={() => setQuizGestartet(false)}>Erneut versuchen</button>
             <button className="impressum" onClick={()=>navigate('/impressum')}>Zum Impressum</button>
-            <button className="retry-btn" onClick={() => navigate('/spielregeln')}>Konsultiere nochmals die SPielregeln um deien Spielleistung zu verbesesrn</button>
+            <button className="retry-btn" onClick={() => navigate('/spielregeln')}>Konsultiere nochmals die Spielregeln um deien Spielleistung zu verbesesrn</button>
             
             
           </div>

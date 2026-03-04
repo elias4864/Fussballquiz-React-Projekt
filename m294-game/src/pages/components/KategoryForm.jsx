@@ -22,7 +22,8 @@ export default function KategoryForm() {
     const confirmSend = window.confirm(`Möchtest du die Kategorie "${categoryName}" wirklich speichern?`);
     if (!confirmSend) return;
 
-    // 3. API Call
+
+
     try {
       // KORREKTUR: Richtige URL für POST
       const response = await fetch("http://localhost:8081/categories/createcategory", {
@@ -50,6 +51,9 @@ export default function KategoryForm() {
   };
 
   return (
+
+
+
     <div style={{ 
       display: "flex", 
       flexDirection: "column", 
@@ -60,7 +64,9 @@ export default function KategoryForm() {
       backgroundImage: `url(${Kategorien})`,
       backgroundSize: "cover",
       backgroundPosition: "center"
+      
     }}>
+      <h2 className="kategorieformular">Kategorieformular</h2>
       
       <div style={{ 
         padding: "30px", 
@@ -80,7 +86,10 @@ export default function KategoryForm() {
           Neue Kategorie erstellen
         </h2>
         
+
+
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+
           <div style={{ textAlign: "left" }}>
             <label htmlFor="category_name" style={{ display: "block", marginBottom: "5px" }}>Kategoriename:</label>
             <input
@@ -89,6 +98,7 @@ export default function KategoryForm() {
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
               required
+              placeholder="Bitte eine Kategorie angeben"
               style={{ padding: "10px", width: "100%", borderRadius: "5px", border: "none" }}
             />
           </div>
@@ -99,6 +109,7 @@ export default function KategoryForm() {
               type="number"
               id="id"
               value={categoryId}
+              placeholder="Bitte eine gültige ID angeben"
               onChange={(e) => setCategoryId(e.target.value)}
               required
               style={{ padding: "10px", width: "100%", borderRadius: "5px", border: "none" }}

@@ -30,7 +30,7 @@
 
 .statusbild{
   width: 100px;
-  height:80px;
+  height:100px;
   
 }
 
@@ -425,7 +425,6 @@ background-color: rgb(23, 215, 77);
   background-size: 200% auto;
   color: #fff;
   background-clip: text;
-  text-fill-color: transparent;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textclip 2s linear infinite;
@@ -654,6 +653,7 @@ background-color: #c4be0d;
   border-radius: 20%;
   color:gold;
   background-color: #00ffcc;
+
 }
 
 .start{
@@ -677,8 +677,14 @@ background-color: #c4be0d;
 
 
 .question-text{
-  font-size: 80px;
-  color:brown;
+background: rgba(0, 0, 0, 0.7); /* Schwarzer, halbtransparenter Kasten */
+  color: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  text-align: center;
+  z-index: 10;
+  position: relative;
 }
 
 .score{
@@ -696,6 +702,12 @@ background-color: #c4be0d;
 
 
 
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
 
 
 @keyframes line-animation {
@@ -798,6 +810,11 @@ width: fit-content;        /* Die Box wird nur so breit wie ihr Inhalt */
 body {
  background-color: #fefefe;
  font-family: 'Lato', sans-serif;
+}
+
+.kategorieformular{
+  font-size: 100px;
+  text-shadow: 2px 2px orangered;
 }
 
 h1 {
@@ -1071,17 +1088,33 @@ h1 {
 }
 
 .sesssion-header{
-    font-family: "Lucida Console", "Courier New", monospace;
+background: rgba(0, 0, 0, 0.8); /* Dunkler Balken oben */
+  width: 100%;
+  padding: 10px;
+  color: #2ecc71; /* Knalliges Grün für die Nummer */
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 2px solid #2ecc71;
+  position: sticky;
+  top: 0;
+  z-index: 10;  
+
 
 
 }
 
+.fragen{
+  font-size: 140px;
+  color:brown;
+}
+
 
 .startbutton{
-  border-radius: 2px;
+  border-radius: 10px;
   color:orange;
   border-color: blue;
-
+  font-size: 18px; 
+  padding: 5px 15px; /* Erster Wert: oben/unten, zweiter Wert: links/rechts *//* Kleinerer Wert = kleinerer Button */
 }
 
 .button4{
@@ -1108,7 +1141,7 @@ h1 {
 
 .frage4{
   color:rgb(0, 0, 0);
-  font-size: 30px;
+  font-size: 100px;
 }
 
 
@@ -1221,7 +1254,6 @@ h2 {
 /* subtle zoom to attention and then back */
 .pop-outin {
   animation: 4.5s anim-popoutin ease infinite;
-  color:
 }
 
 @keyframes anim-popoutin {

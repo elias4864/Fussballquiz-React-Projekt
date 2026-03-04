@@ -3,26 +3,31 @@ import { MemoryRouter } from "react-router-dom";
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import KategoryForm from "../components/KategoryForm";
 
-// 1. Mock für useNavigate
+
+//usesr spietl als würde  geüf twri dib nach dme Sep d rKatoeg er  zur Kateogrliste weitergeführt wird
 const mockNavigate = vi.fn();
 vi.mock("react-router-dom", async () => {
   const actual = await vi.importActual("react-router-dom");
-  return {
-    ...actual,
-    useNavigate: () => mockNavigate,
-  };
+  return { ...actual, useNavigate: () => mockNavigate };
 });
 
+
+//ANtwort des Srever im Response nachdem die Frage hinzugefügt wird wrid wird simuliert  
 describe("KategoryForm Komponente", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    // 2. Globaler Fetch Mock (Wichtig: Muss im beforeEach stehen)
+    
+    // 1. Fetch Mock
     global.fetch = vi.fn(() =>
       Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({ message: "Erfolg" }),
+        json: () => Promise.resolve({ message: "Erfolgreich gespeichert" }),
       })
     );
+
+    // 2. Window-Methoden Mocken (WICHTIG!)
+    vi.spyOn(window, 'confirm').mockImplementation(() => true);
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
   });
 
   it("sollte die Eingabefelder aktualisieren und das Formular absenden", async () => {
@@ -32,36 +37,38 @@ describe("KategoryForm Komponente", () => {
       </MemoryRouter>
     );
 
-    // Felder identifizieren
+
+    //Name der Inputfelder wird in der KOmpoente Kategorieformular erwartet
     const nameInput = screen.getByLabelText(/Kategoriename:/i);
     const idInput = screen.getByLabelText(/Kategorie-ID/i);
     const submitButton = screen.getByRole("button", { name: /Speichern/i });
-    const submitButton2 = screen.getByRole("button", {name:/Abbrechen/i});
 
-    // 3. Benutzereingaben simulieren
-    // Achte darauf, dass der 'name' im target zum State deiner Komponente passt
-    fireEvent.change(idInput, { target: { value: "10", name: "category_id" } });
-    fireEvent.change(nameInput, { target: { value: "Fussball", name: "category_name" } });
 
-    // 4. NUR den Speichern-Button klicken
-    // Wenn du beide klickst, wird der Prozess unterbrochen!
+
+
+    // 3. Eingaben simulieren (Die 'id' muss zum htmlFor/id der Komponente passen)
+    fireEvent.change(nameInput, { target: { value: "Fussball" } });
+    fireEvent.change(idInput, { target: { value: "10" } });
+
+    // 4. Submit auslösen
     fireEvent.click(submitButton);
-    fireEvent.click(submitButton2);
-    // 5. Überprüfen, ob fetch aufgerufen wurde
+
+
+    //Fetch MEtd mit Beipsielwerte im BOdy werden an backen gesendet  
     await waitFor(() => {
       expect(global.fetch).toHaveBeenCalledWith(
         "http://localhost:8081/categories/createcategory",
         expect.objectContaining({
           method: "POST",
-          body: JSON.stringify({
-            category_name: "Fussball",
-            category_id: "10", // Achte auf exakte Keys wie im Backend/State
+          body: JSON.stringify({ 
+            id: "10", 
+            category_name: "Fussball" 
           }),
         })
       );
     });
 
-    // 6. Überprüfen der Navigation
-    expect(mockNavigate).toHaveBeenCalledWith("/kategorien");
+    // 6. Navigation prüfen (Pfad muss zum Code passen: /kategorieliste)
+    expect(mockNavigate).toHaveBeenCalledWith("/kategorieliste");
   });
 });
