@@ -5,7 +5,7 @@ export default function Spielregeln() {
 
   return (
     <div className="spielregeln">
-      <h1 className='regeln'><ins>Spielregeln Fussballquiz 2026</ins></h1>
+      <h2 className='regeln'>Spielregeln Fussballquiz 2026</h2>
       
       <section style={{ textAlign: 'left', marginBottom: '30px', fontSize: '30px',   }}>
 

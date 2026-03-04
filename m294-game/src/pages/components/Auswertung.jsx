@@ -127,7 +127,7 @@ export default function Auswertung() {
     <div className="auswertung-container" style={{ 
       textAlign: 'center', padding: '30px', backgroundColor: '#37ca12',  color: 'blue', minHeight: '100vh', fontFamily: 'sans-serif' 
     }}>
-      <h1 style={{ color: '#771194', fontSize: '70px' }}><ins>🏆 Spielerdashboard von: {name}</ins></h1>
+      <h2 style={{ color: '#b9260f', fontSize: '70px' }}><ins>🏆 Spielerdashboard von: {name}</ins></h2>
       
       <div className="stats-summary" style={{ 
         marginBottom: '30px', padding: '25px', backgroundColor: 'white', 
