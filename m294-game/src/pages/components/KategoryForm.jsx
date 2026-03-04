@@ -94,10 +94,10 @@ export default function KategoryForm() {
           </div>
 
           <div style={{ textAlign: "left" }}>
-            <label htmlFor="category_id" style={{ display: "block", marginBottom: "5px" }}>Kategorie-ID (Zahl):</label>
+            <label htmlFor="id" style={{ display: "block", marginBottom: "5px" }}>Kategorie-ID (Zahl):</label>
             <input
               type="number"
-              id="category_id"
+              id="id"
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
               required

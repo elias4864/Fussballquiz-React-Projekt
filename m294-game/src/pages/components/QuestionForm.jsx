@@ -3,79 +3,70 @@ import { useNavigate } from "react-router-dom";
 
 export default function Frageform() {
   const [questionText, setQuestionText] = useState("");
+  const [difficulty, setDifficulty] = useState("leicht");
   const navigate = useNavigate();
-
-  const [answers, setAnswers] = useState([
-    { answer: "", correct: false },
-    { answer: "", correct: false },
-    { answer: "", correct: false },
-    { answer: "", correct: false },
-  ]);
-  
-  // State für die Anzeige der vom Server zurückgegebenen Daten
   const [savedQuestion, setSavedQuestion] = useState(null);
 
-  const handleAnswerChange = (index, value) => {
-    const newAnswers = [...answers];
-    newAnswers[index].answer = value;
-    setAnswers(newAnswers);
+  // State als Objekt (passend zur SQL-Struktur)
+  const [answers, setAnswers] = useState({
+    correctAnswer: "", 
+    wrong_answer1: "",
+    wrong_answer2: "",
+    wrong_answer3: "",
+  });
+
+  // Einfacher Handler für Objekt-States
+  const handleFieldChange = (field, value) => {
+    setAnswers((prev) => ({ ...prev, [field]: value }));
   };
 
-
-  //Die richtigen Antworten werden gemappt
-  const handleCorrectChange = (index) => {
-    const newAnswers = answers.map((ans, i) => ({
-      ...ans,
-      correct: i === index,
-    }));
-    setAnswers(newAnswers);
-  };
-
-const submit = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
 
-    // 1. Validierung: Prüfen, ob der Fragetext überhaupt existiert
-    if (!questionText.trim()) {
-      return alert("Bitte gib einen Fragetext ein, bevor du speicherst.");
+    // 1. Validierung
+    if (!questionText.trim() || !answers.correctAnswer.trim()) {
+      return alert("Bitte Fragetext und richtige Antwort ausfüllen.");
     }
 
-    // Prüfen, ob eine Antwort als "Richtig" markiert wurde
-    const hasCorrectAnswer = answers.some(ans => ans.correct);
-    if (!hasCorrectAnswer) {
-      return alert("Bitte markiere eine der Antworten als 'Richtig'.");
-    }
+    // 2. Bestätigung
+    const confirmSend = window.confirm(`Möchtest du diese Frage speichern?\n\n"${questionText}"`);
+    if (!confirmSend) return;
 
-    // 2. Bestätigung (Confirm): Erst jetzt fragen wir den User
-    const confirmSend = window.confirm(
-      `Möchtest du diese Frage speichern?\n\n"${questionText}"`
-    );
-    
-    if (!confirmSend) return; // Abbrechen, wenn der User "Abbrechen" klickt
-    // 3. Payload vorbereiten, der die Eingabe der Frage  im question paamet abepscie rudn dei antwroten in answers
+    // 3. Payload für das Backend (CamelCase für correctAnswer!)
     const payload = {
       question: questionText,
-      answers: answers,
+      correctAnswer: answers.correctAnswer,
+          wrong_answer1: answers.wrong_answer1,
+          wrong_answer2: answers.wrong_answer2,
+          wrong_answer3: answers.wrong_answer3,
+          difficulty: difficulty,
+          player_id: 10, 
     };
 
-
-
-   
-    // 4. Senden (Fetch)
+    // 4. API Request
     try {
       const response = await fetch("http://localhost:8081/questions/add", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(payload),
       });
-
+         
       if (response.ok) {
         const data = await response.json();
         setSavedQuestion(data);
         alert("Erfolgreich gespeichert!");
-        
+
         // Formular leeren
         setQuestionText("");
-        setAnswers(answers.map(a => ({ answer: "", correct: false })));
+        setAnswers({
+          correctAnswer: "",
+          wrong_answer1: "",
+          wrong_answer2: "",
+          wrong_answer3: "",
+        });
       } else {
         alert("Server-Fehler: Die Frage konnte nicht gespeichert werden.");
       }
@@ -86,69 +77,67 @@ const submit = async (e) => {
   };
 
   return (
-    <div style={{ background: "#05377c", color: "orange", padding: "20px", borderRadius: "8px", maxWidth: "500px", justifyContent: "center", textAlign:"center",alignItems: "center",width:"100vw",minHeight:"100vh",}}>
-      <h2>Neue Frage hinzufügen</h2>
+    <div style={{ background: "#05377c", color: "orange", padding: "20px", borderRadius: "8px", maxWidth: "500px", margin: "0 auto", textAlign: "center", minHeight: "100vh" }}>
+      <h2 style={{ textShadow: "2px 2px red" }}>Neue Frage hinzufügen</h2>
+      
       <form onSubmit={submit}>
         <div style={{ marginBottom: "15px" }}>
-          <label>Name der Frage </label>
+          <label>Name der Frage</label>
           <input
             type="text"
             value={questionText}
             onChange={(e) => setQuestionText(e.target.value)}
-            placeholder="z.B. SQL steht für"
+            placeholder="z.B. Wer ist Rekordmeister?"
             required
-            style={{ width: "100%", padding: "8px", marginTop: "5px",  textAlign:"center" }}
+            style={{ width: "100%", padding: "8px", marginTop: "5px", textAlign: "center" }}
           />
         </div>
 
-        
+        {/* Richtige Antwort - Grüner Fokus */}
+        <div style={{ margin: "10px 0", padding: "10px", background: "rgba(0,255,0,0.1)", borderRadius: "8px" }}>
+          <label style={{ color: "#2ecc71" }}>Richtige Antwort</label>
+          <input
+            type="text"
+            value={answers.correctAnswer}
+            onChange={(e) => handleFieldChange("correctAnswer", e.target.value)}
+            required
+            style={{ width: "100%", padding: "8px", border: "2px solid #2ecc71", borderRadius: "8px", textAlign: "center" }}
+          />
+        </div>
 
-        {answers.map((ans, i) => (
-          <div key={i} style={{ margin: "10px 0", borderBottom: "1px solid #444", paddingBottom: "10px" }}>
-            <label>Antwort {i + 1} </label>
+        {/* Falsche Antworten */}
+        {[1, 2, 3].map((num) => (
+          <div key={num} style={{ margin: "10px 0" }}>
+            <label>Falsche Antwort {num}</label>
             <input
               type="text"
-              value={ans.answer}
-              onChange={(e) => handleAnswerChange(i, e.target.value)}
+              value={answers[`wrong_answer${num}`]}
+              onChange={(e) => handleFieldChange(`wrong_answer${num}`, e.target.value)}
               required
-              placeholder="Antwort ist korrekt"
-              style={{ marginRight: "10px",borderRadius:"8px",maxWidth:"500pxs",textAlign:"center" }}
+              style={{ width: "100%", padding: "8px", borderRadius: "8px", textAlign: "center" }}
             />
-            <input
-              type="radio"
-              name="correct"
-              checked={ans.correct}
-              onChange={() => handleCorrectChange(i)}
-              required
-            /> 
-            <span> Richtig</span>
           </div>
         ))}
-        
-        <button className="button button1" type="submit" style={{ cursor: "pointer", padding: "10px 20px",  }}>
-          Frage absenden
-        </button>
 
-        <button 
-              type="button" 
-              onClick={() => navigate("/frageliste")} // Pfad zu deiner Frageliste anpassen
-              style={{ cursor: "pointer", padding: "10px 15px", backgroundColor: "white", color: "#05377c", border: "none", borderRadius: "5px", fontWeight: "bold", backgroundColor: "gold" }}
-            >
-              Zur Frageliste
-            </button>
+        <div style={{ marginTop: "20px", display: "flex", gap: "10px", justifyContent: "center" }}>
+          <button type="submit" style={{ cursor: "pointer", padding: "10px 20px", background: "orange", color: "white", border: "none", borderRadius: "5px", fontWeight: "bold" }}>
+            Frage absenden
+          </button>
+          <button type="button" onClick={() => navigate("/frageliste")} style={{ cursor: "pointer", padding: "10px 15px", backgroundColor: "gold", color: "#05377c", border: "none", borderRadius: "5px", fontWeight: "bold" }}>
+            Zur Frageliste
+          </button>
+        </div>
       </form>
 
+      {/* Die korrigierte Vorschau für die Tabelle/Datenbank-Struktur */}
       {savedQuestion && (
-        <div style={{ marginTop: "20px", padding: "15px", background: "#333", borderLeft: "4px solid #4CAF50" }}>
-          <h3>Zuletzt gespeicherte Frage:</h3>
+        <div style={{ marginTop: "20px", padding: "15px", background: "#333", borderLeft: "4px solid #4CAF50", textAlign: "left" }}>
+          <h3 style={{ color: "white" }}>Zuletzt gespeichert:</h3>
           <p><strong>Frage:</strong> {savedQuestion.question}</p>
-          <ul>
-            {savedQuestion.answers.map((a, idx) => (
-              <li key={idx} style={{ color: a.correct ? "#4CAF50" : "white" }}>
-                {a.answer} {a.correct ? "(Korrekt)" : ""}
-              </li>
-            ))}
-          </ul>
+          <p style={{ color: "#4CAF50" }}>Richtig: {savedQuestion.correctAnswer}</p>
+          <p style={{ color: "orange" }}> Falsch: {savedQuestion.wrong_answer1}</p>
+          <p style={{ color: "orange" }}> Falsch: {savedQuestion.wrong_answer2}</p>
+          <p style={{ color: "orange" }}> Falsch: {savedQuestion.wrong_answer3}</p>
         </div>
       )}
     </div>

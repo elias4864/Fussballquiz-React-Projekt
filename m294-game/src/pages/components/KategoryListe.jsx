@@ -6,7 +6,7 @@ function KategoryListe() {
   const [loading, setLoading] = useState(true);
   const [newCategoryName, setNewCategoryName] = useState("");
   const [deleteId, setDeleteId] = useState("");
-  
+
   const navigate = useNavigate();
 
   // Ruft die Kategorien beim ersten Laden der Komponente ab
@@ -22,6 +22,7 @@ function KategoryListe() {
       .then((data) => {
         setCategories(data);
         setLoading(false);
+        
       })
       .catch((err) => {
         console.error("Ladefehler:", err);
@@ -47,7 +48,8 @@ function KategoryListe() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        category_name: newCategoryName
+        category_name: newCategoryName,
+       
         // Hier könnten team, position etc. ergänzt werden, falls du weitere Inputs hättest
       }),
     })
@@ -55,6 +57,7 @@ function KategoryListe() {
         if (res.ok) {
           alert("Kategorie wurde angelegt");
           setNewCategoryName(""); 
+          
           fetchCategories(); 
         } else {
           alert("Fehler beim Anlegen: " + res.status);
@@ -159,9 +162,7 @@ function KategoryListe() {
               <tr style={{ backgroundColor: "#fbbf24", color: "#451a03" }}>
                 <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>ID</th>
                 <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>Kategoriename</th>
-                <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>Team</th>
-                <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>Position</th>
-                <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>Nationalität</th>
+                
                 <th style={{ padding: "15px", borderBottom: "2px solid #f59e0b" }}>Aktionen</th>
               </tr>
             </thead>
@@ -175,9 +176,7 @@ function KategoryListe() {
                   <tr key={cat.id} style={{ textAlign: "center", borderBottom: "1px solid #eee" }}>
                     <td style={{ padding: "12px" }}>{cat.id}</td>
                     <td style={{ padding: "12px", fontWeight: "bold" }}>{cat.category_name}</td>
-                    <td style={{ padding: "12px" }}>{cat.team || "-"}</td>
-                    <td style={{ padding: "12px" }}>{cat.position || "-"}</td>
-                    <td style={{ padding: "12px" }}>{cat.nationality || "-"}</td>
+                    
                     <td style={{ padding: "12px", display: "flex", justifyContent: "center", gap: "10px" }}>
                       <button
                         onClick={() => deleteCategory(cat.id)}
@@ -189,7 +188,7 @@ function KategoryListe() {
                         Löschen
                       </button>
                       <button 
-                        onClick={() => navigate(`/category-details/${cat.id}`)}
+                        onClick={() => navigate(`/kategorien`)}
                         style={{
                           padding: "6px 12px", backgroundColor: "#3b82f6", color: "white",
                           border: "none", borderRadius: "5px", cursor: "pointer", fontWeight: "bold"

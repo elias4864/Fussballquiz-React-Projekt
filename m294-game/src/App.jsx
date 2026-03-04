@@ -22,8 +22,20 @@ function Layout() {
     <div className="App">
       <div className="content">
         <header className="App-header">
-          <marquee><h1 className="start">Willkommen zum Fussballquiz 2026</h1></marquee>
+   
+          <div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h2 class="animate-charcter"> Willkommen zum Fussballquiz 2026</h2>
+    </div>
+  </div>
+</div>
+        
+  
           
+
+          
+         
           {/* Hier gehört die Navigation hin */}
           <GlobalNavigation />
           <hr />

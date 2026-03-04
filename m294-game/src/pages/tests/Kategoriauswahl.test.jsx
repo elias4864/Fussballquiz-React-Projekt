@@ -36,7 +36,7 @@ describe('Kategorieauswahl Komponente', () => {
 
 
 
-    //Verein Bztton wird mit Benutzereingabe simuliert
+    //Verein Button und POostions  wird mit Benutzereingabe simuliert
     const vereinButton = screen.getByText('Verein');
     fireEvent.click(vereinButton);
 
@@ -45,7 +45,7 @@ describe('Kategorieauswahl Komponente', () => {
 
 
 
-   //Buttons für Navigationsleiste  
+ //Kategorie Bztton mit Onclick FUnktion awird validiert also vom Benutezr anklicken simuliert
     const PositionButton = screen.getByText('Position');
     fireEvent.click(PositionButton);
 

@@ -64,10 +64,10 @@ const [formData, setFormData] = useState({
   return (
     <div className="impressum" style={{ padding: '20px', fontFamily: 'Arial' }}>
       <h1 className="impressum1">Impressum</h1>
-      <p className="bounce"><strong>➡Creator des Fussballgame: {name}⬅</strong></p>
-      
+      <div className="line">
+      <h2 className="pop-outin"><strong>Creator des Fussballgame: {name}</strong></h2>
+      </div>
       <ul style={{ listStyleType: 'disc', textAlign: 'left', display: 'inline-block' }}>
-        <li><strong>Stand: {datum}</strong></li>
         <li>Kontakt: <a href={`mailto:${email}`}>{email}</a></li>
         <li>Adresse: {adresse}</li>
         <li>Öffnungszeiten: {öffnungszeiten}</li>

@@ -13,7 +13,6 @@ function SpielAnsicht() {
   const [searchParams] = useSearchParams();
   const catId = searchParams.get('cat');
 
-  const [lösungshinweis, setLösungshinweis] = useState("");
 
   // 1. Zuerst die Fragen filtern
   const gefilterteFragen = (catId && !isNaN(catId))
@@ -36,6 +35,8 @@ const eventhandler = () => {
   };
 
 
+
+  //Standartmssig Time auf null gesetz unt start Time asl Initialwerte  vor Spielstart
   const [session, setSession] = useState({
     score: 0,
     richtig: 0,
@@ -44,8 +45,12 @@ const eventhandler = () => {
     endTime: null,
   });
 
-  // 3. Logik-Variablen (Müssen NACH session und gefilterteFragen stehen!)
+
+  //Konstante wenn der Spieler alle Fragen beantwortet ha führt React das Event 1  
+
   const Spielgewonnen = session.richtig === gefilterteFragen.length && gefilterteFragen.length > 0;
+
+  //Bei einem negativen Score 
   const istNegativ = session.score < 0;
 
   // --- Handler Funktionen ---
@@ -59,7 +64,6 @@ const eventhandler = () => {
       setIsBlue(false);
       setClickedButtonText(null);
       setButtonColor('orange');
-      setLoesungsHinweis(""); // Hinweis für nächste Frage löschen
     }, 600);
   };
 
@@ -90,7 +94,7 @@ const eventhandler = () => {
     if (quote === 1) return { sterne: "⭐⭐⭐⭐⭐", text: "Weltklasse! Du bist der absolute Quizkönig und Europasieger!" };
     if (quote >= 0.8) return { sterne: "⭐⭐⭐⭐", text: "Ausgezeichnete Leistung-fast so gut wie Ronalod  " };
     if (quote >= 0.5) return { sterne: "⭐⭐⭐", text: "Solide Mittelklasse-Du kannst dich noch steigern bis zum Spitzen" };
-    if (quote > 0) return { sterne: "⭐⭐", text: "Da ist noch Luft nach oben – Ab ins Quiztraining!" };
+    if (quote > 0) return { sterne: "⭐⭐", text: "Da ist noch Luft nach oben – Ab ins Fussballquizraining!" };
     return { sterne: "⭐", text: "Amateur Fussball-Trainiere dein Allgemeinwissem über Fussball  täglich häufiger!.",fontSize: "200px" };
   };
 
@@ -114,7 +118,7 @@ const eventhandler = () => {
     } else {
       setStatusBild(Falsch);
       alert("Deine Antwort:"+gewaehlteAntwort+""+"ist leider falsch");
-      alert("Die Richtige Antwort ist"+aktuelleFrage.correct_answer);
+      alert("Die Richtige Antwort ist"+ ""+aktuelleFrage.correct_answer);
       
       setSession(prev => ({ ...prev, score: prev.score - 1, falsch: prev.falsch + 1 }));
     }
@@ -131,6 +135,8 @@ const eventhandler = () => {
     }, 2000); 
   };
 
+
+  //Timer zwischen Fragen von 2 Sekunden falss die Antwort richtig ist, sonst keine Wartezeit
   const berechneDauer = () => {
     if (!session.startTime || !session.endTime) return 0;
     return Math.floor((session.endTime - session.startTime) / 1000);
@@ -161,7 +167,7 @@ const eventhandler = () => {
       
       {!quizGestartet ? (
         <div className="start-screen">
-          <h1 className="bounce-titel">Das Ultimative Fussball-Quiz 2026</h1>
+          <h1>Das Ultimative Fussball-Quiz 2026</h1>
           <button 
             className={`startbutton ${btnColor === 'green' ? 'active-green' : 'default-red'}`} 
             onClick={handleStartClick}
@@ -264,10 +270,14 @@ const eventhandler = () => {
             </table>
 
 
+
           </div>
+                
           <div className="result-actions">
+          
             <button className="nav-btn" onClick={() => navigate('/kategorien')}>Zu den Kategorien</button>
             <button className="retry-btn" onClick={() => setQuizGestartet(false)}>Erneut versuchen</button>
+            <button className="impressum" onClick={()=>navigate('/impressum')}>Zum Impressum</button>
             <button className="retry-btn" onClick={() => navigate('/spielregeln')}>Konsultiere nochmals die SPielregeln um deien Spielleistung zu verbesesrn</button>
             
             

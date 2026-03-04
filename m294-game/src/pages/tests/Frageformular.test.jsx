@@ -1,68 +1,84 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import Frageform from "./Frageform";
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { vi, describe, it, expect, beforeEach } from 'vitest';
+import QuestionForm from '../components/QuestionForm'; 
 
-// Mock für fetch erstellen
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    ok: true,
-    json: () => Promise.resolve({ message: "Frage gespeichert" }),
-  })
-);
+// 1. Mock für die Navigation (useNavigate)
+const mockedUsedNavigate = vi.fn();
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
+  return {
+    ...actual,
+    useNavigate: () => mockedUsedNavigate,
+  };
+});
 
-// Mock für alert erstellen, da window.alert in JSDOM nicht existiert
-global.alert = jest.fn();
-
-//Assert Frageformulat mir SUbmit Button getestet
-describe("Frageformular wird getestet mit Benutereingaben", () => {
+describe('Frageformular  mit Spion der Alet Meldung verfolgt', () => {
+  
   beforeEach(() => {
-    fetch.mockClear();
-    alert.mockClear();
+    // Alle Mocks vor jedem Test zurücksetzen
+    vi.clearAllMocks();
+
+    // 2. Den Spion für window.confirm einrichten (Gibt immer OK zurück)
+    vi.spyOn(window, 'confirm').mockImplementation(() => true);
+    
+    // 3. Den Spion für window.alert einrichten
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
+    
+    global.fetch = vi.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ id: 1, question: 'Erfolg!' }),
+      })
+    );
   });
 
+  it('sollte alle Felder ausfüllen und das Formular erfolgreich absenden', async () => {
+    render(
+      <BrowserRouter>
+        <QuestionForm />
+      </BrowserRouter>
+    );
 
-  //Frageformular wird gemockt 
-  test("sollte das Formular ausfüllen und den korrekten Payload senden", async () => {
-    render(<Frageform />);
+    // 5. Alle Textfelder finden (Array: 0=Frage, 1=Richtig, 2=Falsch1, 3=Falsch2, 4=Falsch3)
+    const allInputs = screen.getAllByRole('textbox');
+    expect(allInputs).toHaveLength(5);
 
-    //Act Benutzereingab für die neu Frage wird hinzugeüfgt
-    const questionInput = screen.getByPlaceholderText(/z.B. SQL steht für/i);
-    fireEvent.change(questionInput, { target: { value: "Was ist React?" } });
+    // 6. Felder befüllen
+    fireEvent.change(allInputs[0], { target: { value: 'Welches Land gewann die WM 2022?' } });
+    fireEvent.change(allInputs[1], { target: { value: 'Argentinien' } });
+    fireEvent.change(allInputs[2], { target: { value: 'Frankreich' } });
+    fireEvent.change(allInputs[3], { target: { value: 'Kroatien' } });
+    fireEvent.change(allInputs[4], { target: { value: 'Marokko' } });
 
-    // 4 Antworten wrden die Inputs mit Index darstestellt
-    const answerInputs = screen.getAllByRole("textbox");
-    // Der erste TextBox-Input ist die Frage, danach kommen die Antworten
-    fireEvent.change(answerInputs[1], { target: { value: "Eine Bibliothek" } });
-    fireEvent.change(answerInputs[2], { target: { value: "Ein Framework" } });
-    fireEvent.change(answerInputs[3], {targets: {value: "Eine Programmiersprache"} });
+    // 7. Absenden klicken
+    const submitBtn = screen.getByRole('button', { name: /Frage absenden/i });
+    fireEvent.click(submitBtn);
 
+
+    //Überüf ob Dialgofenster mit Möchsten sie die Fag wirklc hinzfgüen erscheint
+    expect(window.confirm).toHaveBeenCalled();
     
-    // 3. Die erste Antwort als korrekt markieren (Radio Button)
-    const radioButtons = screen.getAllByRole("radio");
-    fireEvent.click(radioButtons[0]);
-
-    // 4. Formular abschicken und eingeben Daten werden validiert und ans backend gesendet mit Post-Methode
-    const submitButton = screen.getByRole("button", { name: /Frage hinzufügen/i });
-    
-    fireEvent.click(submitButton);
-
-    //Act einzelne  Fragen werden simuliert/gemockt mit  der Call  KOnstante und 
+      //Wiederilbar test welceh vershciedne Eingabe eingut und mehrfach POst-Emtode aufrft und damit FEthc MEthode simuliert wird , mindestens 1 mal
     await waitFor(() => {
-      // Prüfen, ob fetch aufgerufen wurde
-      expect(fetch).toHaveBeenCalledTimes(1);
-      
-      // Den gesendeten Body analysieren
-      const callArgs = JSON.parse(fetch.mock.calls[0][1].body);
-      
-      expect(callArgs.question).toBe("Was ist React?");
-      expect(callArgs.answers[0].answer).toBe("Eine Bibliothek");
-      expect(callArgs.answers[0].correct).toBe(true);
-      expect(callArgs.answers[1].correct).toBe(false);
-      
-      expect(callArgs.answers[0].correct).toBe(false);
+      expect(global.fetch).toHaveBeenCalledTimes(1);
     });
+    
+    // Wurde eine Erfolgsmeldung per Alert gezeigt das Frage vom Server also Post-Emtod funktioenti hat
+    expect(window.alert).toHaveBeenCalledWith("Erfolgreich gespeichert!");
+  });
 
-    // Prüfen, ob die Erfolgsmeldung kam die Frage wurde am Server gepscierht
-    expect(global.alert).toHaveBeenCalledWith("Frage wurde am Server gespeichert!");
+  it('sollte zur Frageliste navigieren, wenn der Zurück-Button geklickt wird', () => {
+    render(
+      <BrowserRouter>
+        <QuestionForm />
+      </BrowserRouter>
+    );
+
+    const listBtn = screen.getByRole('button', { name: /Zur Frageliste/i });
+    fireEvent.click(listBtn);
+
+    // Prüfen, ob navigate aufgerufen wurde
+    expect(mockedUsedNavigate).toHaveBeenCalledWith("/frageliste");
   });
 });

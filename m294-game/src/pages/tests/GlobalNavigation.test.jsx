@@ -5,7 +5,7 @@ import { expect } from 'vitest';
 
 //Testbeschreibung und GLobalNavigation Komponente  wird in BrwoserRouter  geladen dait im GUI angezeigt wird
 describe("GlobalNavigation Komponenten Tests", () => {
-    test("Sollte alle vier Navigations-Links enthalten (Aufgabe 5)", () => {
+    test("Sollte alle 11 Navigationslinks für die einzelne Pages richtig prüfen also der Text der  Navbar  prüfen", () => {
         render(
             <BrowserRouter>
                 <GlobalNavigation />
@@ -16,12 +16,13 @@ describe("GlobalNavigation Komponenten Tests", () => {
         expect(screen.getByRole('link', { name: /impressum/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /quiz/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /spielregeln/i })).toBeInTheDocument();
-        expect(screen.getByRole('link', {name:/new-category/i})).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /home/i })).toBeInTheDocument();
         expect(screen.getByRole('link', { name: /kategorien/i })).toBeInTheDocument();
         expect(screen.getByRole('link', {name: /frageliste/i})).toBeInTheDocument();
         
         expect(screen.getByRole('link', { name: /kategorie hinzufügen/i })).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: /kategorieliste/i })).toBeInTheDocument();
+
         expect(screen.getByRole('link',{name: /fragen/i})).toBeInTheDocument();
         expect(screen.getByRole('link',{name:/frage hinzufügen/i})).toBeInTheDocument();
         

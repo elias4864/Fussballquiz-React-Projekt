@@ -2,13 +2,12 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import SpielAnsicht from '../Spielansicht';
 import '@testing-library/jest-dom';
-import { expect } from 'vitest';
+import { describe, test, expect } from 'vitest';
 
-
-//Arrange Mockup Test schreiben un
 describe('Question Komponenten Tests', () => {
-  test('sollte die erste Frage und alle Antwortmöglichkeiten korrekt rendern', ()  => {
-    // Wir rendern die Komponente der Spielansicht  innerhalb eines Routers in den Specerreiut
+  
+  test('sollte das Quiz starten und alle Fragen nacheinander korrekt rendern', async () => {
+    // 1. ARRANGE
     render(
       <MemoryRouter initialEntries={['/quiz?cat=35']}>
         <Routes>
@@ -17,41 +16,29 @@ describe('Question Komponenten Tests', () => {
       </MemoryRouter>
     );
 
-    // 1. Klicke auf den Start-Button, um das Quiz zu beginnen
-    const startButton =  screen.getByRole('button', { name: /start/i });
+    // 2. ACT: Startbutton klicken
+    const startButton = screen.getByRole('button', { name: /⇛ Fussballgame starten ⇚/i });
     fireEvent.click(startButton);
 
-    // 2. Prüfen, ob die Frage aus catId 20 angezeigt wird
-    // Laut deinem Code: "Für welchen Klub spielt Yann Sommer aktuell?"
-    //Überprüft ob Shaquiri  im MIttelfeld,Sturm uoder Verteidiger ist also in dies erPosition spielt durhc iene Frage
-  
-    // 3. Prüfen, ob eine der Antwortmöglichkeiten da ist mit Regex Symbol i
-    expect(screen.getByText(/Was ist der Vorname des Spielers mit der Id 80?"/i)).toBeInTheDocument();
-    expect(screen.getByText(/Wie sieht die Torbilanz von Manuel Akanji vom letzten Spiel aus?"/i)).toBeInTheDocument();
-    expect(screen.getByText(/Welcher Spieler hat die EM 2008 und EM 2012 gewonnen"/i)).toBeInTheDocument();
-
-    expect(screen.getByRole('button', { name: /Oliver/i })).toBeInTheDocument();
-    expect(screen.getByRole('button',{name:/Iker Casillas/i})).toBeInTheDocument();
-    expect(screen.getByRole('button', {name:/Oliver Kahn/i})).toBeInTheDocument();
-    
+    // 3. ASSERT: Erste Frage (Mbappé Tore)
+    // Wir nutzen findByText, da nach dem Klick oft asynchron geladen wird
+    const mpappefrage = await screen.findByText(/Welcher dieser  vorgegebenen Spieler ist ein Verteidiger?/i);
+    expect(mpappefrage).toBeInTheDocument();    
+    expect(screen.getByRole('button', { name: /Xherdan Shaqiri/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Manuel Akanji/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: / Cristiano Ronaldo/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: / Breel Embolo/i })).toBeInTheDocument();
+    expect(screen.get)
 
 
+    // 4. ASSERT: Zweite Frage (Maradona)
+    const maradonna = await screen.findByText(/In welchem Jahr wurde Diego Maradona geboren\?/i);
+    expect(maradonna).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /1960/i })).toBeInTheDocument();
 
-      
-    expect( screen.getByRole('button', { name: /Manuel/i })).toBeInTheDocument();
-     expect(screen.getByRole('button', { name: /Kylian/i })).toBeInTheDocument();
-     expect(screen.getByRole('button', {name:/Ricardo/i})).toBeInTheDocument();
-     expect(screen.getByRole('button', {name:/2 Tore/i})).toBeInTheDocument();
-    expect(screen.getByRole('button', {name:/2 Tore/i})).toBeInTheDocument();
-    expect(screen.getByRole('button', {name:/1 Tor/i})).toBeInTheDocument();
-    expect(screen.getByRole('button', {name:/kein Tor/i})).toBeInTheDocument();
-    expect(screen.getByRole('button', {name:/1 Assists/i})).toBeInTheDocument();
-
-
-
-
-     
-
-    
+    // 5. ASSERT: Dritte Frage (Nationalität)
+    const nationalitaet = await screen.findByText(/Für welche Nationalität spielt Kylian Mbappé\?/i);
+    expect(nationalitaet).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Frankreich/i })).toBeInTheDocument();
   });
 });
