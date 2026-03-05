@@ -5,7 +5,7 @@ import Kategorien from "../../assets/Kategorien.webp";
 export default function KategoryForm() {
   // Konsistente Benennung wie im Backend
   const [categoryName, setCategoryName] = useState("");
-  const [categoryId, setCategoryId] = useState("");
+  const [categoryId, setCategoryId] = useState(""); 
 
   const navigate = useNavigate();
 
@@ -90,7 +90,7 @@ export default function KategoryForm() {
 
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
 
-          <div style={{ textAlign: "left" }}>
+          <div style={{ textAlign: "left" }}> 
             <label htmlFor="category_name" style={{ display: "block", marginBottom: "5px" }}>Kategoriename:</label>
             <input
               type="text"
@@ -126,7 +126,7 @@ export default function KategoryForm() {
             <button 
               style={{ backgroundColor: "salmon", color: "white", padding: "10px 20px", border: "none", borderRadius: "5px", cursor: "pointer", fontWeight: "bold" }} 
               type="button" 
-              onClick={() => navigate("/kategorieliste")}
+              onClick={() => navigate("/kategorien")}
             >
               Abbrechen
             </button>
